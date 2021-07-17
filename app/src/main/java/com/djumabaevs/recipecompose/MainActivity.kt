@@ -28,20 +28,39 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
 
+            Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .border(border = BorderStroke(width = 1.dp, color = Color.Black))
+                ) {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .border(border = BorderStroke(width = 1.dp, color = Color.Black))
-            ) {
+                    Text(
+                        text = "ITEM1",
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
 
-                Text(
-                    text = "ITEM1",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
+                }
 
+                Spacer(modifier = Modifier.padding(20.dp))
+
+                Row(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(200.dp)
+                        .border(border = BorderStroke(width = 1.dp, color = Color.Black))
+                ) {
+
+                    Text(
+                        text = "ITEM1",
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+
+                }
             }
+
+
 
 
             /*        LazyColumn(modifier = Modifier
