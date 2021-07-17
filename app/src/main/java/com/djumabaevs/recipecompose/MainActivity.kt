@@ -27,12 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
-
-
-
-
-
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, RecipeListFragment())
     }
 }
