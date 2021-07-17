@@ -6,9 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
@@ -20,12 +22,17 @@ class MainActivity : AppCompatActivity() {
         setContent {
             Column {
                 Image(painterResource(
-                    id = R.drawable.happy_meal), 
+                    id = R.drawable.happy_meal),
+                    modifier = Modifier.height(300.dp),
+                    contentScale = ContentScale.Crop,
                     contentDescription = "meal picture" )
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = "Happy Meal")
+                    Text(text = "Happy Meal",
+                    )
                     Spacer(modifier = Modifier.padding(top = 10.dp))
                     Text(text = "800 calories")
+                    Spacer(modifier = Modifier.padding(top = 10.dp))
+                    Text(text = "$5.99")
                 }
             }
             
