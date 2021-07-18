@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 
 class RecipeFragment: Fragment() {
@@ -22,7 +24,12 @@ class RecipeFragment: Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = "Recipe Fragment")
+                    Text(
+                        text = "RECIPE FRAGMENT",
+                        style = TextStyle(
+                            fontSize = 21.sp
+                        )
+                    )
                 }
             }
         }
