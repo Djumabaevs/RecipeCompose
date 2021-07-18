@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 
 class RecipeListFragment: Fragment() {
 
@@ -40,7 +41,11 @@ class RecipeListFragment: Fragment() {
                         )
                     )
                     Spacer(modifier = Modifier.padding(10.dp))
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(
+                        onClick = {
+                            findNavController().navigate(R.id.viewRecipe)
+                        }
+                    ) {
                         Text(text = "To Recipe Fragment")
                     }
                 }
