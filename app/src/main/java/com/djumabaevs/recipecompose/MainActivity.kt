@@ -21,6 +21,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.djumabaevs.recipecompose.domain.model.Recipe
+import com.djumabaevs.recipecompose.network.model.RecipeNetworkEntity
+import com.djumabaevs.recipecompose.network.model.RecipeNetworkMapper
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        val mapper = RecipeNetworkMapper()
+        val recipe = Recipe()
+        val networkEntity: RecipeNetworkEntity = mapper.mapToEntity(recipe)
+        val r: Recipe = mapper.mapFromEntity(networkEntity)
 
 
        /* supportFragmentManager.beginTransaction()
