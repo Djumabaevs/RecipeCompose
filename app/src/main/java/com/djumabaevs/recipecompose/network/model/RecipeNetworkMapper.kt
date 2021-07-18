@@ -23,7 +23,19 @@ class RecipeNetworkMapper: EntityMapper<RecipeNetworkEntity, Recipe> {
     }
 
     override fun mapToEntity(domainModel: Recipe): RecipeNetworkEntity {
-
+        return RecipeNetworkEntity(
+            id = domainModel.id,
+            title = domainModel.title,
+            featuredImage = domainModel.featuredImage,
+            rating = domainModel.rating,
+            publisher = domainModel.publisher,
+            sourceUrl = domainModel.sourceUrl,
+            description = domainModel.description,
+            cookingInstructions = domainModel.cookingInstructions,
+            ingredients = domainModel.ingredients,
+            dateAdded = domainModel.dateAdded,
+            dateUpdated = domainModel.dateUpdated
+        )
     }
 
 
