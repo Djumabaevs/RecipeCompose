@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="com.djumabaevs.recipecompose.RecipeListFragment"
-        android:label="RecipeListFragment" />
+        android:label="RecipeListFragment" >
+        <action
+            android:id="@+id/viewRecipe"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.djumabaevs.recipecompose.RecipeFragment"
+        android:label="RecipeFragment" />
 </navigation>
