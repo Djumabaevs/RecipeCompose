@@ -24,7 +24,7 @@ class RecipeNetworkMapper: EntityMapper<RecipeNetworkEntity, Recipe> {
 
     override fun mapToEntity(domainModel: Recipe): RecipeNetworkEntity {
         return RecipeNetworkEntity(
-            id = domainModel.id,
+            pk = domainModel.id,
             title = domainModel.title,
             featuredImage = domainModel.featuredImage,
             rating = domainModel.rating,
@@ -36,6 +36,17 @@ class RecipeNetworkMapper: EntityMapper<RecipeNetworkEntity, Recipe> {
             dateAdded = domainModel.dateAdded,
             dateUpdated = domainModel.dateUpdated
         )
+    }
+
+    fun fromEntityList(initial: List<RecipeNetworkEntity>): List<Recipe> {
+        return initial.map {
+            mapFromEntity(it)
+        }
+    }
+
+    fun toEntityList(initial: List<Recipe>): List<RecipeNetworkEntity> {
+        return initial.map {
+            mapToEntity(it) }
     }
 
 
