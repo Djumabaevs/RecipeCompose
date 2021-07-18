@@ -22,8 +22,15 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.djumabaevs.recipecompose.domain.model.Recipe
+import com.djumabaevs.recipecompose.network.RecipeService
 import com.djumabaevs.recipecompose.network.model.RecipeNetworkEntity
 import com.djumabaevs.recipecompose.network.model.RecipeNetworkMapper
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,10 +39,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val mapper = RecipeNetworkMapper()
+
+        val service = Retrofit.Builder()
+            .baseUrl("https://food2fork.ca/api/recipe/")
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .build()
+            .create(RecipeService::class.java)
+
+        CoroutineScope(IO).launch {
+
+        }
+
+
+
+      /*  val mapper = RecipeNetworkMapper()
         val recipe = Recipe()
         val networkEntity: RecipeNetworkEntity = mapper.mapToEntity(recipe)
-        val r: Recipe = mapper.mapFromEntity(networkEntity)
+        val r: Recipe = mapper.mapFromEntity(networkEntity)*/
 
 
        /* supportFragmentManager.beginTransaction()
