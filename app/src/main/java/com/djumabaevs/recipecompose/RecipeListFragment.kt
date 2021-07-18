@@ -9,13 +9,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 
@@ -25,9 +28,28 @@ class RecipeListFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        val view = inflater.inflate(R.layout.fragment_recipe_list, container, false)
+        return ComposeView(requireContext()).apply {
+            setContent {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Recipe List",
+                        style = TextStyle(
+                            fontSize = 21.sp
+                        )
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    Button(onClick = { /*TODO*/ }) {
+                        Text(text = "To Recipe Fragment")
+                    }
+                }
+            }
+        }
+
+
+
+/*        val view = inflater.inflate(R.layout.fragment_recipe_list, container, false)
         view.findViewById<ComposeView>(R.id.compose_view).setContent {
 
             Column(modifier = Modifier
@@ -47,7 +69,11 @@ class RecipeListFragment: Fragment() {
                 }
             }
 
-        }
+        }*/
+
+
+
+
         //Three other ways to use compose
 
      /*   return ComposeView(requireContext()).apply {
@@ -69,7 +95,7 @@ class RecipeListFragment: Fragment() {
         container, false)
         return view*/
 
-        return view
+
     }
 
 }
