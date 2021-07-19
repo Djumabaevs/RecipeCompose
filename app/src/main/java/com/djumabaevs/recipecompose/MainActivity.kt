@@ -19,7 +19,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val service = Retrofit.Builder()
+
+
+
+    /*    val service = Retrofit.Builder()
             .baseUrl("https://food2fork.ca/api/recipe/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 id = 583
             )
             Log.d("Main", "onCreate: ${responseRecipe.title}")
-        }
+        }*/
 
 
 
