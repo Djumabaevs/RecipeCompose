@@ -1,4 +1,4 @@
-package com.djumabaevs.recipecompose
+package com.djumabaevs.recipecompose.presentation.ui.recipe
 
 import android.os.Bundle
 import android.view.LayoutInflater

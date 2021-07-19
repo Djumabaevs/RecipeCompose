@@ -1,15 +1,8 @@
-package com.djumabaevs.recipecompose
+package com.djumabaevs.recipecompose.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.djumabaevs.recipecompose.network.RecipeService
-import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.djumabaevs.recipecompose.R
 
 
 class MainActivity : AppCompatActivity() {
