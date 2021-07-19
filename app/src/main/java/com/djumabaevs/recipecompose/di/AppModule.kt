@@ -20,6 +20,11 @@ object AppModule {
     }
 
 
+    @Singleton
+    @Provides
+    fun provideRandomString(): String {
+        return "Just can't get my hands out the cookie jar!"
+    }
 
 
 }
