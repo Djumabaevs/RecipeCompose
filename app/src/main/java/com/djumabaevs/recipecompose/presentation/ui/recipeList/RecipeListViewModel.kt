@@ -17,4 +17,9 @@ class RecipeListViewModel @ViewModelInject constructor(
         println("ViewModel is $repository")
         println("ViewModel is $token")
     }
+
+    fun getRepo() = repository
+    fun getRandomString() = randomString
+    fun getToken() = token
+
 }
