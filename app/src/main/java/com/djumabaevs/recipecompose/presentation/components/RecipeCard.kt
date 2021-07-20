@@ -54,7 +54,17 @@ fun RecipeCard(
                         text = title,
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
-                        .wrapContentWidth(Alignment.Start))
+                        .wrapContentWidth(Alignment.Start),
+                    style = MaterialTheme.typography.h5)
+
+                    Text(
+                        text = recipe.rating.toString(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.End)
+                            .align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.h6
+                    )
 
                 }
             }
