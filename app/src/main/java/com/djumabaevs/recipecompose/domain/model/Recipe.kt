@@ -1,10 +1,9 @@
 package com.djumabaevs.recipecompose.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 
 
-@Parcelize
+
+//@Parcelize
 data class Recipe (
     var id: Int? = null,
     var title: String? = null,
@@ -17,5 +16,6 @@ data class Recipe (
     var ingredients: List<String>? = null,
     var dateAdded: String? = null,
     var dateUpdated: String? = null,
-): Parcelable
+)
+//    : Parcelable
 
