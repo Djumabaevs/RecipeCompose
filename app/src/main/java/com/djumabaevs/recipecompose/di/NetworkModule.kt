@@ -9,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -33,6 +34,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    @Named("auth_token")
     fun provideAuthToken(): String {
         return "Token 9c8b06d329136da358c2d00e76946b0111ce2c48"
     }
