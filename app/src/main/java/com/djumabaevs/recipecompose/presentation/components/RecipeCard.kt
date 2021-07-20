@@ -11,12 +11,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.djumabaevs.recipecompose.R
 import com.djumabaevs.recipecompose.domain.model.Recipe
+import com.djumabaevs.recipecompose.util.DEFAULT_RECIPE_IMAGE
+import com.djumabaevs.recipecompose.util.LoadPicture
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -43,13 +46,19 @@ fun RecipeCard(
 
 //                val imageBitmap: ImageBitmap = ImageBitmap.imageResource(id = R.drawable.empty_plate)
 
-                Image(
-                    bitmap = imageResource(id = R.drawable.empty_plate),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(225.dp),
-                    contentScale = ContentScale.Crop
-                )
+                val image = LoadPicture(
+                    url = url,
+                    defaultImage = DEFAULT_RECIPE_IMAGE).value
+             image?.let { img ->
+                 Image(
+                     bitmap = img.asImageBitmap(),
+                     contentDescription = "Recipe Featured Image",
+                     modifier = Modifier
+                         .fillMaxWidth()
+                         .height(225.dp),
+                     contentScale = ContentScale.Crop
+                 )
+             }
 
             }
             recipe.title?.let { title ->

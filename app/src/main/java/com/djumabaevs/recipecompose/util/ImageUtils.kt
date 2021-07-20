@@ -10,6 +10,11 @@ import androidx.compose.ui.platform.LocalContext
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.djumabaevs.recipecompose.R
+
+
+const val DEFAULT_RECIPE_IMAGE = R.drawable.empty_plate
+
 
 @Composable
 fun LoadPicture(
@@ -31,4 +36,19 @@ fun LoadPicture(
                 TODO("Not yet implemented")
             }
         })
+
+    Glide.with(LocalContext.current)
+        .asBitmap()
+        .load(url)
+        .into(object: CustomTarget<Bitmap>(){
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                bitmapState.value = resource
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    return bitmapState
 }
