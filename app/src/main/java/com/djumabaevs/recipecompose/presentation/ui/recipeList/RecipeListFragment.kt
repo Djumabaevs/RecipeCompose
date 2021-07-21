@@ -5,10 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
@@ -61,25 +58,34 @@ class RecipeListFragment : Fragment() {
                         elevation = 8.dp,
                         color = MaterialTheme.colors.primary
                             ){
+                        Row(modifier = Modifier.fillMaxWidth()) {
 
-                    }
+                            TextField(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.9f)
+                                    .padding(8.dp),
+                                value = query,
+                                onValueChange = { newValue ->
+                                    viewModel.onQueryChanged(newValue)
+                                },
+                                label = {
+                                    Text(text = "Search")
+                                },
 
-                    TextField(
-                        value = query,
-                        onValueChange = { newValue ->
-                            viewModel.onQueryChanged(newValue)
-                        })
+                            )
 
-                    Spacer(modifier = Modifier.padding(10.dp))
-                    
-                    LazyColumn {
-                        itemsIndexed(
-                            items = recipes
-                        ) { index, recipe ->
-                            RecipeCard(recipe = recipe, onClick = {})
 
+//                            Spacer(modifier = Modifier.padding(10.dp))
+
+                            LazyColumn {
+                                itemsIndexed(
+                                    items = recipes
+                                ) { index, recipe ->
+                                    RecipeCard(recipe = recipe, onClick = {})
+
+                                }
+                            }
                         }
-
                     }
                 }
             }
