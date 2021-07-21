@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -110,6 +112,17 @@ class RecipeListFragment : Fragment() {
                                 )
                             )
 //                            Spacer(modifier = Modifier.padding(10.dp))
+                        }
+
+                        ScrollableTabRow(modifier = Modifier.fillMaxWidth()) {
+                            for(category in getAllFoodCategories()) {
+                                Text(
+                                    text = category.value,
+                                    modifier = Modifier.padding(8.dp),
+                                    style = TextStyle.Default,
+                                    color = Color.Blue,
+                                )
+                            }
                         }
                     }
                     LazyColumn {
