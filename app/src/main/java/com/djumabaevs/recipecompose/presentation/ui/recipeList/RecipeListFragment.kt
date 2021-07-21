@@ -9,9 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.foundation.lazy.itemsIndexed
+
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.TextStyle
@@ -44,14 +48,25 @@ class RecipeListFragment : Fragment() {
 
                 val recipes = viewModel.recipes.value
 
-                LazyColumn {
-                    itemsIndexed(
-                        items = recipes
-                    ) { index, recipe ->
+                val query = remember { mutableStateOf("beef") }
+                
+                Column {
+                    
+                    TextField(
+                        value = "Chicken",
+                        onValueChange = {})
+
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    
+                    LazyColumn {
+                        itemsIndexed(
+                            items = recipes
+                        ) { index, recipe ->
                             RecipeCard(recipe = recipe, onClick = {})
 
-                    }
+                        }
 
+                    }
                 }
             }
         }
