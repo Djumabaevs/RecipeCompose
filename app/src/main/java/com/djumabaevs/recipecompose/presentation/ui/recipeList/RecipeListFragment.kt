@@ -1,5 +1,6 @@
 package com.djumabaevs.recipecompose.presentation.ui.recipeList
 
+import android.accessibilityservice.AccessibilityService
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,13 +9,23 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -29,6 +40,7 @@ class RecipeListFragment : Fragment() {
 
     private val viewModel: RecipeListViewModel by viewModels()
 
+    @ExperimentalComposeUiApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,42 +61,63 @@ class RecipeListFragment : Fragment() {
                 val query = viewModel.query.value
 
 //                val _query = savedInstanceState { " beef" }
-                
+
                 Column {
 
-                    Surface (
+                    Surface(
                         modifier = Modifier
                             .fillMaxWidth(),
                         elevation = 8.dp,
                         color = MaterialTheme.colors.primary
-                            ){
+                    ) {
+
                         Row(modifier = Modifier.fillMaxWidth()) {
 
+//                            val focusManager = LocalFocusManager.current
+                            val keyboardController = LocalSoftwareKeyboardController.current
                             TextField(
+                                value = query,
                                 modifier = Modifier
                                     .fillMaxWidth(0.9f)
                                     .padding(8.dp),
-                                value = query,
                                 onValueChange = { newValue ->
                                     viewModel.onQueryChanged(newValue)
                                 },
                                 label = {
                                     Text(text = "Search")
                                 },
-
+                                keyboardOptions = KeyboardOptions(
+                                    keyboardType = KeyboardType.Text,
+                                    imeAction = ImeAction.Search
+                                ),
+                                leadingIcon = {
+                                    Icon(Icons.Filled.Search, contentDescription = "icon")
+                                },
+                                keyboardActions = KeyboardActions(
+                                    onSearch = {
+                                        viewModel.newSearch(query)
+                                    },
+                                    onDone = {
+//                                        focusManager.clearFocus()
+                                        keyboardController?.hideSoftwareKeyboard()
+                                    }
+                                ),
+                                textStyle = TextStyle(
+                                    color = MaterialTheme.colors.onSurface,
+                                ),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    backgroundColor = MaterialTheme.colors.surface,
+                                )
                             )
-
-
 //                            Spacer(modifier = Modifier.padding(10.dp))
+                        }
+                    }
+                    LazyColumn {
+                        itemsIndexed(
+                            items = recipes
+                        ) { index, recipe ->
+                            RecipeCard(recipe = recipe, onClick = {})
 
-                            LazyColumn {
-                                itemsIndexed(
-                                    items = recipes
-                                ) { index, recipe ->
-                                    RecipeCard(recipe = recipe, onClick = {})
-
-                                }
-                            }
                         }
                     }
                 }
@@ -94,27 +127,26 @@ class RecipeListFragment : Fragment() {
 }
 
 
-                /*   for(recipe in recipes) {
-                       Log.d(TAG, "onCreateView: ${recipe.title}")
-                   }
+/*   for(recipe in recipes) {
+       Log.d(TAG, "onCreateView: ${recipe.title}")
+   }
 
-                   Column(modifier = Modifier.padding(16.dp)) {
-                       Text(
-                           text = "Recipe List",
-                           style = TextStyle(
-                               fontSize = 21.sp
-                           )
-                       )
-                       Spacer(modifier = Modifier.padding(10.dp))
-                       Button(
-                           onClick = {
-                               findNavController().navigate(R.id.viewRecipe)
-                           }
-                       ) {
-                           Text(text = "To Recipe Fragment")
-                       }
-                   }*/
-
+   Column(modifier = Modifier.padding(16.dp)) {
+       Text(
+           text = "Recipe List",
+           style = TextStyle(
+               fontSize = 21.sp
+           )
+       )
+       Spacer(modifier = Modifier.padding(10.dp))
+       Button(
+           onClick = {
+               findNavController().navigate(R.id.viewRecipe)
+           }
+       ) {
+           Text(text = "To Recipe Fragment")
+       }
+   }*/
 
 
 /*        val view = inflater.inflate(R.layout.fragment_recipe_list, container, false)
@@ -140,13 +172,13 @@ class RecipeListFragment : Fragment() {
         }*/
 
 
-        //Three other ways to use compose
+//Three other ways to use compose
 
-        /*   return ComposeView(requireContext()).apply {
-               setContent {
-                   Text(text = "Recipe List Fragment")
-               }
-           }*/
+/*   return ComposeView(requireContext()).apply {
+       setContent {
+           Text(text = "Recipe List Fragment")
+       }
+   }*/
 
 /*
         val view = ComposeView(requireContext())
@@ -157,8 +189,8 @@ class RecipeListFragment : Fragment() {
         }
         return view*/
 
-        /* val view = inflater.inflate(R.layout.fragment_recipe_list,
-         container, false)
-         return view*/
+/* val view = inflater.inflate(R.layout.fragment_recipe_list,
+ container, false)
+ return view*/
 
 
