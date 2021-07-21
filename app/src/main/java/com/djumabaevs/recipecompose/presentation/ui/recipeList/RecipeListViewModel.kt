@@ -20,6 +20,8 @@ class RecipeListViewModel @ViewModelInject constructor(
 
     val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
 
+    val query = mutableStateOf("Chicken")
+
 
 //    private val _recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
 //    val recipes: LiveData<List<Recipe>> get() = _recipes
@@ -37,6 +39,10 @@ class RecipeListViewModel @ViewModelInject constructor(
             )
             recipes.value = result
         }
+    }
+
+    fun onQueryChanged(query: String) {
+        this.query.value = query
     }
 
 }
