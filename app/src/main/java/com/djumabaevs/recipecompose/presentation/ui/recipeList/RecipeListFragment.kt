@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.djumabaevs.recipecompose.presentation.components.FoodCategoryChip
 import com.djumabaevs.recipecompose.presentation.components.RecipeCard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -70,7 +71,7 @@ class RecipeListFragment : Fragment() {
                         modifier = Modifier
                             .fillMaxWidth(),
                         elevation = 8.dp,
-                        color = MaterialTheme.colors.primary
+                        color = Color.White
                     ) {
 
                         Column {
@@ -119,11 +120,12 @@ class RecipeListFragment : Fragment() {
                             LazyRow(modifier = Modifier.fillMaxWidth()) {
                                 items(50) {
                                     for(category in getAllFoodCategories()) {
-                                        Text(
-                                            text = category.value,
-                                            modifier = Modifier.padding(8.dp),
-                                            style = TextStyle.Default,
-                                            color = Color.Yellow,
+                                        FoodCategoryChip(
+                                            category = category.value,
+                                            onExecuteSearch = {
+                                                viewModel.onQueryChanged(it)
+                                                viewModel.newSearch(it)
+                                            }
                                         )
                                     }
                                 }
