@@ -73,55 +73,60 @@ class RecipeListFragment : Fragment() {
                         color = MaterialTheme.colors.primary
                     ) {
 
-                        Row(modifier = Modifier.fillMaxWidth()) {
+                        Column {
+
+                            Row(modifier = Modifier.fillMaxWidth()) {
 
 //                            val focusManager = LocalFocusManager.current
-                            val keyboardController = LocalSoftwareKeyboardController.current
-                            TextField(
-                                value = query,
-                                modifier = Modifier
-                                    .fillMaxWidth(0.9f)
-                                    .padding(8.dp),
-                                onValueChange = { newValue ->
-                                    viewModel.onQueryChanged(newValue)
-                                },
-                                label = {
-                                    Text(text = "Search")
-                                },
-                                keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Text,
-                                    imeAction = ImeAction.Search
-                                ),
-                                leadingIcon = {
-                                    Icon(Icons.Filled.Search, contentDescription = "icon")
-                                },
-                                keyboardActions = KeyboardActions(
-                                    onSearch = {
-                                        viewModel.newSearch(query)
+                                val keyboardController = LocalSoftwareKeyboardController.current
+                                TextField(
+                                    value = query,
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.9f)
+                                        .padding(8.dp),
+                                    onValueChange = { newValue ->
+                                        viewModel.onQueryChanged(newValue)
                                     },
-                                    onDone = {
+                                    label = {
+                                        Text(text = "Search")
+                                    },
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Search
+                                    ),
+                                    leadingIcon = {
+                                        Icon(Icons.Filled.Search, contentDescription = "icon")
+                                    },
+                                    keyboardActions = KeyboardActions(
+                                        onSearch = {
+                                            viewModel.newSearch(query)
+                                        },
+                                        onDone = {
 //                                        focusManager.clearFocus()
-                                        keyboardController?.hideSoftwareKeyboard()
-                                    }
-                                ),
-                                textStyle = TextStyle(
-                                    color = MaterialTheme.colors.onSurface,
-                                ),
-                                colors = TextFieldDefaults.textFieldColors(
-                                    backgroundColor = MaterialTheme.colors.surface,
+                                            keyboardController?.hideSoftwareKeyboard()
+                                        }
+                                    ),
+                                    textStyle = TextStyle(
+                                        color = MaterialTheme.colors.onSurface,
+                                    ),
+                                    colors = TextFieldDefaults.textFieldColors(
+                                        backgroundColor = MaterialTheme.colors.surface,
+                                    )
                                 )
-                            )
 //                            Spacer(modifier = Modifier.padding(10.dp))
-                        }
+                            }
 
-                        ScrollableTabRow(modifier = Modifier.fillMaxWidth()) {
-                            for(category in getAllFoodCategories()) {
-                                Text(
-                                    text = category.value,
-                                    modifier = Modifier.padding(8.dp),
-                                    style = TextStyle.Default,
-                                    color = Color.Blue,
-                                )
+                            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                                items(50) {
+                                    for(category in getAllFoodCategories()) {
+                                        Text(
+                                            text = category.value,
+                                            modifier = Modifier.padding(8.dp),
+                                            style = TextStyle.Default,
+                                            color = Color.Yellow,
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

@@ -20,7 +20,7 @@ class RecipeListViewModel @ViewModelInject constructor(
 
     val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
 
-    val query = mutableStateOf("Chicken")
+    val query = mutableStateOf("")
 
 
 //    private val _recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
