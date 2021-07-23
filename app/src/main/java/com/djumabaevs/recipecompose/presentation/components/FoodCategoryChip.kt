@@ -3,6 +3,7 @@ package com.djumabaevs.recipecompose.presentation.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -14,7 +15,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FoodCategoryChip(
     category: String,
-    onExecuteSearch: (String) -> Unit
+    isSelected: Boolean = false,
+    onSelectedCategoryChanged: (String) -> Unit,
+    onExecuteSearch: () -> Unit
 ) {
     Surface(
         modifier = Modifier.padding(8.dp),
@@ -23,7 +26,15 @@ fun FoodCategoryChip(
         color = MaterialTheme.colors.primary
     ) {
         Row(
-            modifier = Modifier.clickable(onClick = {onExecuteSearch(category)})
+            modifier = Modifier
+                //.clickable(onClick = {onExecuteSearch(category)})
+                .toggleable(
+                    value = isSelected,
+                    onValueChange = {
+                        onSelectedCategoryChanged(category)
+                        onExecuteSearch()
+                    }
+                )
         ) {
             Text(
                 text = category,
