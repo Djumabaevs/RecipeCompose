@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -119,7 +120,13 @@ class RecipeListFragment : Fragment() {
 //                            Spacer(modifier = Modifier.padding(10.dp))
                             }
 
-                            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                            val scrollState = rememberScrollState()
+
+                            LazyRow(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 8.dp, bottom = 8.dp),
+                            ) {
                                 items(50) {
                                     for(category in getAllFoodCategories()) {
                                         FoodCategoryChip(

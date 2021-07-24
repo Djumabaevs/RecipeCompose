@@ -24,6 +24,8 @@ class RecipeListViewModel @ViewModelInject constructor(
 
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
 
+    var categoryScrollPosition: Float = 0f
+
 
 //    private val _recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
 //    val recipes: LiveData<List<Recipe>> get() = _recipes
@@ -51,6 +53,10 @@ class RecipeListViewModel @ViewModelInject constructor(
         val newCategory = getFoodCategory(category)
         selectedCategory.value = newCategory
         onQueryChanged(category)
+    }
+
+    fun onChangeCategoryScrollPosition(position: Float) {
+        categoryScrollPosition = position
     }
 
 }
