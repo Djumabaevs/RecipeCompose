@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.filled.Search
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +39,8 @@ import com.djumabaevs.recipecompose.presentation.components.FoodCategoryChip
 import com.djumabaevs.recipecompose.presentation.components.RecipeCard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -120,14 +124,21 @@ class RecipeListFragment : Fragment() {
 //                            Spacer(modifier = Modifier.padding(10.dp))
                             }
 
-                            val scrollState = rememberScrollState()
+                            val scrollState = rememberLazyListState()
+                            val scope = rememberCoroutineScope()
 
                             LazyRow(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(start = 8.dp, bottom = 8.dp),
+                                state = scrollState
                             ) {
                                 items(50) {
+                                    scope.launch {
+                                        scrollState
+                                            .scrollToItem(viewModel.categoryScrollPosition)
+                                    }
+
                                     for(category in getAllFoodCategories()) {
                                         FoodCategoryChip(
                                             category = category.value,
