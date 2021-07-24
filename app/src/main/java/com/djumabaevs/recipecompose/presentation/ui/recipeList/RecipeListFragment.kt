@@ -65,6 +65,8 @@ class RecipeListFragment : Fragment() {
 
 //                val _query = savedInstanceState { " beef" }
 
+                val selectedCategory = viewModel.selectedCategory.value
+
                 Column {
 
                     Surface(
@@ -100,7 +102,7 @@ class RecipeListFragment : Fragment() {
                                     },
                                     keyboardActions = KeyboardActions(
                                         onSearch = {
-                                            viewModel.newSearch(query)
+                                            viewModel.newSearch()
                                         },
                                         onDone = {
 //                                        focusManager.clearFocus()
@@ -122,9 +124,14 @@ class RecipeListFragment : Fragment() {
                                     for(category in getAllFoodCategories()) {
                                         FoodCategoryChip(
                                             category = category.value,
+                                            isSelected = selectedCategory == category,
+                                            onSelectedCategoryChanged = {
+                                                viewModel.onSelectedCategoryChanged(it)
+                                            },
                                             onExecuteSearch = {
-                                                viewModel.onQueryChanged(it)
-                                                viewModel.newSearch(it)
+                                                viewModel::newSearch
+//                                                viewModel.onQueryChanged(it)
+//                                                viewModel.newSearch(it)
                                             }
                                         )
                                     }
