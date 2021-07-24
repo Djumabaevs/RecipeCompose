@@ -136,8 +136,10 @@ class RecipeListFragment : Fragment() {
                                 items(50) {
                                     scope.launch {
                                         scrollState
-                                            .scrollToItem(viewModel.categoryScrollPosition)
+                                            .scrollToItem(
+                                                viewModel.categoryScrollPosition)
                                     }
+
 
                                     for(category in getAllFoodCategories()) {
                                         FoodCategoryChip(
@@ -145,6 +147,9 @@ class RecipeListFragment : Fragment() {
                                             isSelected = selectedCategory == category,
                                             onSelectedCategoryChanged = {
                                                 viewModel.onSelectedCategoryChanged(it)
+                                                viewModel.onChangeCategoryScrollPosition(
+                                                    scrollState.firstVisibleItemIndex
+                                                )
                                             },
                                             onExecuteSearch = {
                                                 viewModel::newSearch
