@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -20,11 +21,23 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.djumabaevs.recipecompose.presentation.ui.recipeList.FoodCategory
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.getAllFoodCategories
 import kotlinx.coroutines.launch
 
+@ExperimentalComposeUiApi
 @Composable
-fun SearchAppBar() {
+fun SearchAppBar(
+    query: String,
+    onQueryChanged: (String) -> Unit,
+    onExecuteSearch: () -> Unit,
+    scrollPosition: Int,
+    selectedCategory: FoodCategory?,
+    onSelectedCategoryChanged: (String) -> Unit,
+    onChangeCategoryScrollPosition: (Int) -> Unit,
+
+
+) {
 
     Surface(
         modifier = Modifier
@@ -45,7 +58,7 @@ fun SearchAppBar() {
                         .fillMaxWidth(0.9f)
                         .padding(8.dp),
                     onValueChange = { newValue ->
-                        viewModel.onQueryChanged(newValue)
+                        onQueryChanged(newValue)
                     },
                     label = {
                         Text(text = "Search")
@@ -59,7 +72,7 @@ fun SearchAppBar() {
                     },
                     keyboardActions = KeyboardActions(
                         onSearch = {
-                            viewModel.newSearch()
+                            onExecuteSearch()
                         },
                         onDone = {
 //                                        focusManager.clearFocus()
@@ -89,7 +102,7 @@ fun SearchAppBar() {
                     scope.launch {
                         scrollState
                             .scrollToItem(
-                                viewModel.categoryScrollPosition)
+                                scrollPosition)
                     }
 
 
@@ -98,13 +111,13 @@ fun SearchAppBar() {
                             category = category.value,
                             isSelected = selectedCategory == category,
                             onSelectedCategoryChanged = {
-                                viewModel.onSelectedCategoryChanged(it)
-                                viewModel.onChangeCategoryScrollPosition(
+                                onSelectedCategoryChanged(it)
+                                onChangeCategoryScrollPosition(
                                     scrollState.firstVisibleItemIndex
                                 )
                             },
                             onExecuteSearch = {
-                                viewModel::newSearch
+                                onExecuteSearch()
 //                                                viewModel.onQueryChanged(it)
 //                                                viewModel.newSearch(it)
                             }
