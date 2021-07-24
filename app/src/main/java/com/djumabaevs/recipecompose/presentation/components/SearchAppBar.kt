@@ -35,8 +35,7 @@ fun SearchAppBar(
     selectedCategory: FoodCategory?,
     onSelectedCategoryChanged: (String) -> Unit,
     onChangeCategoryScrollPosition: (Int) -> Unit,
-
-
+    function: () -> Unit,
 ) {
 
     Surface(
