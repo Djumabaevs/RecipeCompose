@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.repository.RecipeRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
 
@@ -26,6 +27,8 @@ class RecipeListViewModel @ViewModelInject constructor(
 
     var categoryScrollPosition: Int = 0
 
+    val loading = mutableStateOf(false)
+
 
 //    private val _recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
 //    val recipes: LiveData<List<Recipe>> get() = _recipes
@@ -36,12 +39,15 @@ class RecipeListViewModel @ViewModelInject constructor(
 
      fun newSearch() {
         viewModelScope.launch {
+            loading.value = true
+            delay(2000)
             val result = repository.search(
                 token = token,
                 page = 1,
                 query = query.value
             )
             recipes.value = result
+            loading.value = false
         }
     }
 

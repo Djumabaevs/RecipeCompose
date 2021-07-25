@@ -12,6 +12,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.djumabaevs.recipecompose.presentation.components.CircularIndeterminateProgressBar
 import com.djumabaevs.recipecompose.presentation.components.RecipeCard
 import com.djumabaevs.recipecompose.presentation.components.SearchAppBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +48,7 @@ class RecipeListFragment : Fragment() {
 
                 val selectedCategory = viewModel.selectedCategory.value
 
+
                 Column {
                     
                     SearchAppBar(
@@ -60,6 +62,8 @@ class RecipeListFragment : Fragment() {
                         viewModel::onChangeCategoryScrollPosition) {
                         
                     }
+
+                    CircularIndeterminateProgressBar(isDisplayed = true)
     
                     LazyColumn {
                         itemsIndexed(
