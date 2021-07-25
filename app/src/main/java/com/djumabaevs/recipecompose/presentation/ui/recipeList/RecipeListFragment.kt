@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.djumabaevs.recipecompose.presentation.components.CircularIndeterminateProgressBar
-import com.djumabaevs.recipecompose.presentation.components.PulsingDemo
-import com.djumabaevs.recipecompose.presentation.components.RecipeCard
-import com.djumabaevs.recipecompose.presentation.components.SearchAppBar
+import com.djumabaevs.recipecompose.presentation.components.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.djumabaevs.recipecompose.presentation.components.HeartAnimationDefinition.HeartButtonState.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -52,7 +52,6 @@ class RecipeListFragment : Fragment() {
 
                 val loading = viewModel.loading.value
 
-                PulsingDemo()
 
                 Column {
 
@@ -68,6 +67,17 @@ class RecipeListFragment : Fragment() {
                     ) {
 
                     }
+
+                    val state = remember { mutableStateOf(IDLE) }
+
+                    AnimatedHeartButton(
+                        modifier = Modifier,
+                        buttonState = state,
+                        onToggle = {
+                            state.value = if(state.value == IDLE) ACTIVE else IDLE
+                        })
+
+                    PulsingDemo()
 
                     Box(modifier = Modifier.fillMaxSize()) {
 
