@@ -51,6 +51,16 @@ class RecipeListViewModel @ViewModelInject constructor(
         }
     }
 
+    private fun clearSelectedCategory() {
+        selectedCategory.value = null
+    }
+
+    private fun resetSearchState() {
+        recipes.value = listOf()
+        if(selectedCategory.value?.value != query.value)
+            clearSelectedCategory()
+    }
+
     fun onQueryChanged(query: String) {
         this.query.value = query
     }
