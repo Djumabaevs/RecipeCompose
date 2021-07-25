@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -48,9 +49,11 @@ class RecipeListFragment : Fragment() {
 
                 val selectedCategory = viewModel.selectedCategory.value
 
+                val loading = viewModel.loading.value
+
 
                 Column {
-                    
+
                     SearchAppBar(
                         query = query,
                         onQueryChanged = viewModel::onQueryChanged,
@@ -59,19 +62,24 @@ class RecipeListFragment : Fragment() {
                         selectedCategory = selectedCategory,
                         onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
                         onChangeCategoryScrollPosition =
-                        viewModel::onChangeCategoryScrollPosition) {
-                        
+                        viewModel::onChangeCategoryScrollPosition
+                    ) {
+
                     }
 
-                    CircularIndeterminateProgressBar(isDisplayed = true)
-    
-                    LazyColumn {
-                        itemsIndexed(
-                            items = recipes
-                        ) { index, recipe ->
-                            RecipeCard(recipe = recipe, onClick = {})
+                    Box(modifier = Modifier.fillMaxSize()) {
 
+                        LazyColumn {
+                            itemsIndexed(
+                                items = recipes
+                            ) { index, recipe ->
+
+                                RecipeCard(recipe = recipe, onClick = {})
+
+                            }
                         }
+
+                        CircularIndeterminateProgressBar(isDisplayed = loading)
                     }
                 }
             }
