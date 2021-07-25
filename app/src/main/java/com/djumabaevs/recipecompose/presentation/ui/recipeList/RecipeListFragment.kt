@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.djumabaevs.recipecompose.presentation.components.CircularIndeterminateProgressBar
+import com.djumabaevs.recipecompose.presentation.components.PulsingDemo
 import com.djumabaevs.recipecompose.presentation.components.RecipeCard
 import com.djumabaevs.recipecompose.presentation.components.SearchAppBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +52,7 @@ class RecipeListFragment : Fragment() {
 
                 val loading = viewModel.loading.value
 
+                PulsingDemo()
 
                 Column {
 
