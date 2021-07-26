@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.LinearGradientShader
 import androidx.compose.ui.platform.ComposeView
@@ -127,9 +129,11 @@ fun GradientDemo() {
         Offset(200f, 200f),
         Offset(400f, 400f),
         colors
-    )
+    ) as Brush
     Surface(shape = MaterialTheme.shapes.small) {
-
+        Spacer(modifier = Modifier
+            .fillMaxSize()
+            .background(brush = brush))
     }
 }
 
