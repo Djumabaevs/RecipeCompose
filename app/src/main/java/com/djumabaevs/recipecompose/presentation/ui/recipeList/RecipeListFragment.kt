@@ -73,9 +73,10 @@ class RecipeListFragment : Fragment() {
                         onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
                         onChangeCategoryScrollPosition =
                         viewModel::onChangeCategoryScrollPosition
-                    ) {
+                    )
+                    {}
 
-                    }
+                    GradientDemo()
 
 /*                    Row (
                         modifier = Modifier
@@ -118,22 +119,25 @@ class RecipeListFragment : Fragment() {
 }
 
 @Composable
-fun GradientDemo() {
+fun GradientDemo(
+) {
 
     val colors = listOf(
         Color.Blue,
         Color.Red,
         Color.Blue
     )
-    val brush = LinearGradientShader(
+    val brush = Brush.linearGradient(
+        colors,
         Offset(200f, 200f),
         Offset(400f, 400f),
-        colors
-    ) as Brush
+
+    )
     Surface(shape = MaterialTheme.shapes.small) {
         Spacer(modifier = Modifier
             .fillMaxSize()
             .background(brush = brush))
+
     }
 }
 
