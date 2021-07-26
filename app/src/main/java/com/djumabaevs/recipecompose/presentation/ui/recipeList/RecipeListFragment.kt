@@ -76,6 +76,14 @@ class RecipeListFragment : Fragment() {
                     )
                     {}
 
+                    ShimmerRecipeCardItem(
+                        colors = listOf(
+                            Color.LightGray.copy(0.9f),
+                            Color.LightGray.copy(0.2f),
+                            Color.LightGray.copy(0.9f),
+                        ),
+                        cardHeight = 250.dp )
+
 //                    GradientDemo()
 
 /*                    Row (
