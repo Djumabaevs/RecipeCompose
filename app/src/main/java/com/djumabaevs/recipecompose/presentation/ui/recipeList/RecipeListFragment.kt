@@ -76,7 +76,7 @@ class RecipeListFragment : Fragment() {
                     )
                     {}
 
-                    GradientDemo()
+//                    GradientDemo()
 
 /*                    Row (
                         modifier = Modifier
