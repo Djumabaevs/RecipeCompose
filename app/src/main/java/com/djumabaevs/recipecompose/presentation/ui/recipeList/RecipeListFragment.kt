@@ -28,6 +28,7 @@ import com.djumabaevs.recipecompose.presentation.components.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.djumabaevs.recipecompose.presentation.components.HeartAnimationDefinition.HeartButtonState.*
+import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimation
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -76,13 +77,16 @@ class RecipeListFragment : Fragment() {
                     )
                     {}
 
-                    ShimmerRecipeCardItem(
+
+                  /*  ShimmerRecipeCardItem(
                         colors = listOf(
                             Color.LightGray.copy(0.9f),
                             Color.LightGray.copy(0.2f),
                             Color.LightGray.copy(0.9f),
                         ),
-                        cardHeight = 250.dp )
+                        cardHeight = 250.dp )*/
+
+
 
 //                    GradientDemo()
 
@@ -107,14 +111,27 @@ class RecipeListFragment : Fragment() {
                     PulsingDemo()*/
 
                     Box(modifier = Modifier.fillMaxSize()) {
+                        if(loading) {
 
-                        LazyColumn {
-                            itemsIndexed(
-                                items = recipes
-                            ) { index, recipe ->
+                            Surface(color = MaterialTheme.colors.background) {
+                                LazyColumn {
+                                    repeat(5) {
+                                        item {
+                                            ShimmerAnimation()
+                                        }
+                                    }
+                                }
+                            }
 
-                                RecipeCard(recipe = recipe, onClick = {})
+                        } else {
+                            LazyColumn {
+                                itemsIndexed(
+                                    items = recipes
+                                ) { index, recipe ->
 
+                                    RecipeCard(recipe = recipe, onClick = {})
+
+                                }
                             }
                         }
 

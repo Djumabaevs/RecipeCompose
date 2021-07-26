@@ -10,6 +10,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimationDefinitions.ShimmerColorShades
 
 object ShimmerAnimationDefinitions {
 
@@ -36,7 +37,7 @@ fun ShimmerAnimation() {
         initialValue = 0f,
         targetValue = 1000f,
         animationSpec = infiniteRepeatable(
-            tween(1200, easing = FastOutSlowInEasing),
+            tween(durationMillis = 1200, easing = FastOutSlowInEasing),
             RepeatMode.Restart
         )
     )
