@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.djumabaevs.recipecompose.presentation.components.*
@@ -68,16 +70,25 @@ class RecipeListFragment : Fragment() {
 
                     }
 
-                    val state = remember { mutableStateOf(IDLE) }
+/*                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        horizontalArrangement = Arrangement.Center
+                            ){
+                        val state = remember { mutableStateOf(IDLE) }
 
-                    AnimatedHeartButton(
-                        modifier = Modifier,
-                        buttonState = state,
-                        onToggle = {
-                            state.value = if(state.value == IDLE) ACTIVE else IDLE
-                        })
+                        AnimatedHeartButton(
+                            modifier = Modifier,
+                            buttonState = state,
+                            onToggle = {
+                                state.value = if(state.value == IDLE) ACTIVE else IDLE
+                            })
 
-                    PulsingDemo()
+                    }
+
+
+                    PulsingDemo()*/
 
                     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -97,6 +108,11 @@ class RecipeListFragment : Fragment() {
             }
         }
     }
+}
+
+@Composable
+fun GradientDemo() {
+
 }
 
 
