@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 object ShimmerAnimationDefinitions {
@@ -15,6 +16,16 @@ object ShimmerAnimationDefinitions {
     enum class AnimationState {
         START, END
     }
+
+    val ShimmerColorShades = listOf(
+
+        Color.LightGray.copy(0.9f),
+
+        Color.LightGray.copy(0.2f),
+
+        Color.LightGray.copy(0.9f)
+
+    )
 }
 
 @Composable
