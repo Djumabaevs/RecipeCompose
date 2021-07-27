@@ -29,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.djumabaevs.recipecompose.presentation.components.HeartAnimationDefinition.HeartButtonState.*
 import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimation
+import com.djumabaevs.recipecompose.presentation.theme.AppTheme
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -50,41 +51,42 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
 
-                val recipes = viewModel.recipes.value
+                AppTheme(darkTheme = false) {
+                    val recipes = viewModel.recipes.value
 
 //                val query = remember { mutableStateOf("beef") }
 
-                val query = viewModel.query.value
+                    val query = viewModel.query.value
 
 //                val _query = savedInstanceState { " beef" }
 
-                val selectedCategory = viewModel.selectedCategory.value
+                    val selectedCategory = viewModel.selectedCategory.value
 
-                val loading = viewModel.loading.value
-
-
-                Column {
-
-                    SearchAppBar(
-                        query = query,
-                        onQueryChanged = viewModel::onQueryChanged,
-                        onExecuteSearch = viewModel::newSearch,
-                        scrollPosition = viewModel.categoryScrollPosition,
-                        selectedCategory = selectedCategory,
-                        onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
-                        onChangeCategoryScrollPosition =
-                        viewModel::onChangeCategoryScrollPosition
-                    )
-                    {}
+                    val loading = viewModel.loading.value
 
 
-                  /*  ShimmerRecipeCardItem(
-                        colors = listOf(
-                            Color.LightGray.copy(0.9f),
-                            Color.LightGray.copy(0.2f),
-                            Color.LightGray.copy(0.9f),
-                        ),
-                        cardHeight = 250.dp )*/
+                    Column {
+
+                        SearchAppBar(
+                            query = query,
+                            onQueryChanged = viewModel::onQueryChanged,
+                            onExecuteSearch = viewModel::newSearch,
+                            scrollPosition = viewModel.categoryScrollPosition,
+                            selectedCategory = selectedCategory,
+                            onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
+                            onChangeCategoryScrollPosition =
+                            viewModel::onChangeCategoryScrollPosition
+                        )
+                        {}
+
+
+                        /*  ShimmerRecipeCardItem(
+                              colors = listOf(
+                                  Color.LightGray.copy(0.9f),
+                                  Color.LightGray.copy(0.2f),
+                                  Color.LightGray.copy(0.9f),
+                              ),
+                              cardHeight = 250.dp )*/
 
 
 
@@ -110,32 +112,33 @@ class RecipeListFragment : Fragment() {
 
                     PulsingDemo()*/
 
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        if(loading) {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            if(loading) {
 
-                            Surface(color = MaterialTheme.colors.background) {
-                                LazyColumn {
-                                    repeat(5) {
-                                        item {
-                                            ShimmerAnimation()
+                                Surface(color = MaterialTheme.colors.background) {
+                                    LazyColumn {
+                                        repeat(5) {
+                                            item {
+                                                ShimmerAnimation()
+                                            }
                                         }
+                                    }
+                                }
+
+                            } else {
+                                LazyColumn {
+                                    itemsIndexed(
+                                        items = recipes
+                                    ) { index, recipe ->
+
+                                        RecipeCard(recipe = recipe, onClick = {})
+
                                     }
                                 }
                             }
 
-                        } else {
-                            LazyColumn {
-                                itemsIndexed(
-                                    items = recipes
-                                ) { index, recipe ->
-
-                                    RecipeCard(recipe = recipe, onClick = {})
-
-                                }
-                            }
+                            CircularIndeterminateProgressBar(isDisplayed = loading)
                         }
-
-                        CircularIndeterminateProgressBar(isDisplayed = loading)
                     }
                 }
             }
