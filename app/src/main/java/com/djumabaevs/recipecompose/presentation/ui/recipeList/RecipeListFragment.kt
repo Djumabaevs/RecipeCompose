@@ -8,9 +8,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalanceWallet
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -185,6 +187,29 @@ fun GradientDemo(
             .fillMaxSize()
             .background(brush = brush))
 
+    }
+}
+
+@Composable
+fun MyBottomBar() {
+    BottomNavigation(
+        elevation = 12.dp
+    ) {
+        BottomNavigationItem(
+            icon = {Icon(Icons.Default.BrokenImage, "brokenImage")},
+            selected = false ,
+            onClick = {}
+        )
+        BottomNavigationItem(
+            icon = {Icon(Icons.Default.Search, "search")},
+            selected = true ,
+            onClick = {}
+        )
+        BottomNavigationItem(
+            icon = {Icon(Icons.Default.AccountBalanceWallet, "wallet")},
+            selected = false ,
+            onClick = {}
+        )
     }
 }
 
