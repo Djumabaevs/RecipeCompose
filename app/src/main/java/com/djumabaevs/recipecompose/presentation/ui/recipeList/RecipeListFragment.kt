@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -69,23 +70,59 @@ class RecipeListFragment : Fragment() {
 
                     val loading = viewModel.loading.value
 
+                    Scaffold (
+                        topBar = {
+                            SearchAppBar(
+                                query = query,
+                                onQueryChanged = viewModel::onQueryChanged,
+                                onExecuteSearch = viewModel::newSearch,
+                                scrollPosition = viewModel.categoryScrollPosition,
+                                selectedCategory = selectedCategory,
+                                onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
+                                onChangeCategoryScrollPosition =
+                                viewModel::onChangeCategoryScrollPosition,
+                                onToggleTheme = {
+                                    application.toggleLightTheme()
+                                }
+                            ) {}
+                        },
+                        bottomBar = {},
+                        drawerContent = {}
+                            ) {
+                        Box(modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = MaterialTheme.colors.background)) {
+                            if(loading) {
 
-                    Column {
+                                Surface(color = MaterialTheme.colors.background) {
+                                    LazyColumn {
+                                        repeat(5) {
+                                            item {
+                                                ShimmerAnimation()
+                                            }
+                                        }
+                                    }
+                                }
 
-                        SearchAppBar(
-                            query = query,
-                            onQueryChanged = viewModel::onQueryChanged,
-                            onExecuteSearch = viewModel::newSearch,
-                            scrollPosition = viewModel.categoryScrollPosition,
-                            selectedCategory = selectedCategory,
-                            onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
-                            onChangeCategoryScrollPosition =
-                            viewModel::onChangeCategoryScrollPosition,
-                            onToggleTheme = {
-                                application.toggleLightTheme()
+                            } else {
+                                LazyColumn {
+                                    itemsIndexed(
+                                        items = recipes
+                                    ) { index, recipe ->
+
+                                        RecipeCard(recipe = recipe, onClick = {})
+
+                                    }
+                                }
                             }
-                        )
-                        {}
+
+                            CircularIndeterminateProgressBar(isDisplayed = loading)
+                        }
+
+                    }
+
+
+
 
 
                         /*  ShimmerRecipeCardItem(
@@ -120,36 +157,8 @@ class RecipeListFragment : Fragment() {
 
                     PulsingDemo()*/
 
-                        Box(modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = MaterialTheme.colors.background)) {
-                            if(loading) {
 
-                                Surface(color = MaterialTheme.colors.background) {
-                                    LazyColumn {
-                                        repeat(5) {
-                                            item {
-                                                ShimmerAnimation()
-                                            }
-                                        }
-                                    }
-                                }
 
-                            } else {
-                                LazyColumn {
-                                    itemsIndexed(
-                                        items = recipes
-                                    ) { index, recipe ->
-
-                                        RecipeCard(recipe = recipe, onClick = {})
-
-                                    }
-                                }
-                            }
-
-                            CircularIndeterminateProgressBar(isDisplayed = loading)
-                        }
-                    }
                 }
             }
         }
