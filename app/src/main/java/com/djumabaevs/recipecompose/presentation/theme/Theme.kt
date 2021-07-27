@@ -1,6 +1,10 @@
 package com.djumabaevs.recipecompose.presentation.theme
 
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val LightThemeColors = lightColors(
     primary = Blue600,
@@ -29,3 +33,18 @@ private val DarkThemeColors = darkColors(
     surface = Black1,
     onSurface = Color.White,
 )
+
+@Composable
+fun AppTheme(
+    darkTheme: Boolean,
+    content: @Composable () -> Unit
+) {
+    MaterialTheme (
+        colors = if(darkTheme) DarkThemeColors else LightThemeColors
+            ) {
+        content()
+
+    }
+
+}
+
