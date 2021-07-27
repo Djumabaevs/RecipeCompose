@@ -24,16 +24,21 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.djumabaevs.recipecompose.presentation.BaseApplication
 import com.djumabaevs.recipecompose.presentation.components.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.djumabaevs.recipecompose.presentation.components.HeartAnimationDefinition.HeartButtonState.*
 import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimation
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
+
+    @Inject
+    lateinit var application: BaseApplication
 
     private val viewModel: RecipeListViewModel by viewModels()
 
@@ -51,7 +56,7 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
 
-                AppTheme(darkTheme = false) {
+                AppTheme(darkTheme = application.isDark.value) {
                     val recipes = viewModel.recipes.value
 
 //                val query = remember { mutableStateOf("beef") }
@@ -75,7 +80,10 @@ class RecipeListFragment : Fragment() {
                             selectedCategory = selectedCategory,
                             onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
                             onChangeCategoryScrollPosition =
-                            viewModel::onChangeCategoryScrollPosition
+                            viewModel::onChangeCategoryScrollPosition,
+                            onToggleTheme = {
+                                application.toggleLightTheme()
+                            }
                         )
                         {}
 
