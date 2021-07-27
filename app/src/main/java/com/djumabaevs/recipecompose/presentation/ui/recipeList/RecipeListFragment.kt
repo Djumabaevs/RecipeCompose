@@ -120,7 +120,9 @@ class RecipeListFragment : Fragment() {
 
                     PulsingDemo()*/
 
-                        Box(modifier = Modifier.fillMaxSize()) {
+                        Box(modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = MaterialTheme.colors.background)) {
                             if(loading) {
 
                                 Surface(color = MaterialTheme.colors.background) {
