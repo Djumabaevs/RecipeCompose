@@ -10,17 +10,21 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.FoodCategory
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.getAllFoodCategories
 import kotlinx.coroutines.launch
@@ -35,6 +39,7 @@ fun SearchAppBar(
     selectedCategory: FoodCategory?,
     onSelectedCategoryChanged: (String) -> Unit,
     onChangeCategoryScrollPosition: (Int) -> Unit,
+    onToggleTheme: () -> Unit,
     function: () -> Unit,
 ) {
 
@@ -42,7 +47,7 @@ fun SearchAppBar(
         modifier = Modifier
             .fillMaxWidth(),
         elevation = 8.dp,
-        color = Color.White
+        color = MaterialTheme.colors.surface
     ) {
 
         Column {
@@ -86,6 +91,25 @@ fun SearchAppBar(
                     )
                 )
 //                            Spacer(modifier = Modifier.padding(10.dp))
+
+                ConstraintLayout(
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    val menu = createRef()
+                    IconButton(
+                        onClick = onToggleTheme,
+                        modifier = Modifier
+                            .constrainAs(menu) {
+                                end.linkTo(parent.end)
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                            }
+                    ) {
+                        val icon : ImageVector = Icons.Filled.MoreVert
+                        Icon(icon, "menu")
+                    }
+
+                }
             }
 
             val scrollState = rememberLazyListState()
