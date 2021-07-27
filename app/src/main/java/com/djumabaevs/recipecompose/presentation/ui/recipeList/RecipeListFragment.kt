@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import com.djumabaevs.recipecompose.presentation.BaseApplication
 import com.djumabaevs.recipecompose.presentation.components.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,7 +89,9 @@ class RecipeListFragment : Fragment() {
                                 }
                             ) {}
                         },
-                        bottomBar = {},
+                        bottomBar = {
+                                    MyBottomBar()
+                        },
                         drawerContent = {}
                             ) {
                         Box(modifier = Modifier
@@ -210,6 +213,20 @@ fun MyBottomBar() {
             selected = false ,
             onClick = {}
         )
+    }
+}
+
+@Composable
+fun MyDrawer(
+    navController: NavController
+) {
+    Column {
+        Text(text = "item1")
+        Text(text = "item2")
+        Text(text = "item3")
+        Text(text = "item4")
+        Text(text = "item5")
+
     }
 }
 
