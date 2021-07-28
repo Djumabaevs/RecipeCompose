@@ -19,14 +19,17 @@ import androidx.compose.runtime.remember
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.LinearGradientShader
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.djumabaevs.recipecompose.presentation.BaseApplication
 import com.djumabaevs.recipecompose.presentation.components.*
@@ -35,6 +38,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.djumabaevs.recipecompose.presentation.components.HeartAnimationDefinition.HeartButtonState.*
 import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimation
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -63,8 +67,25 @@ class RecipeListFragment : Fragment() {
                     val query = viewModel.query.value
                     val selectedCategory = viewModel.selectedCategory.value
                     val loading = viewModel.loading.value
-                    val snackBarHostState = remember {SnackbarHostState()}
 
+                    val snackbarHostState = remember {SnackbarHostState()}
+
+                    Column {
+                        Button(onClick = {
+                            lifecycleScope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = "Here comes the compose snackbar!",
+                                    actionLabel = "HIDE!",
+                                    duration = SnackbarDuration.Short
+                                )
+                            }
+                        }) {
+                            Text(text = "Show snackbar")
+                        }
+
+                    }
+
+/*
                     Scaffold (
                         topBar = {
                             SearchAppBar(
@@ -79,7 +100,8 @@ class RecipeListFragment : Fragment() {
                                 onToggleTheme = {
                                     application.toggleLightTheme()
                                 }
-                            ) {}
+                            ) {
+                            }
                         },
                         bottomBar = {
                                     MyBottomBar()
@@ -117,7 +139,7 @@ class RecipeListFragment : Fragment() {
 
                             CircularIndeterminateProgressBar(isDisplayed = loading)
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -185,9 +207,32 @@ fun MyDrawer(
 }
 
 @Composable
-fun customSnackBar() {
+fun DecoupledSnackbarDemo(
+    snackbarHostState: SnackbarHostState
+) {
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+        val snackbar = createRef()
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.constrainAs(snackbar) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            snackbar = {
+                Snackbar(
+                    action = {
 
+                    }
+                ) {
+                    
+                }
+            }
+        )
+    }
 }
+
+
 
 
 
