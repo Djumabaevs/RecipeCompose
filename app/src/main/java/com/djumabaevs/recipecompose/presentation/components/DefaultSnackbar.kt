@@ -41,6 +41,7 @@ fun DefaultSnackbar(
                     }
                 }
             )
-        }
+        },
+        modifier = modifier
     )
 }

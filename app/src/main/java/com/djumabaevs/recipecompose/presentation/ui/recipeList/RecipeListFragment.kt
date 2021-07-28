@@ -68,7 +68,7 @@ class RecipeListFragment : Fragment() {
                     val query = viewModel.query.value
                     val selectedCategory = viewModel.selectedCategory.value
                     val loading = viewModel.loading.value
-                    val snackbarHostState = remember {SnackbarHostState()}
+                    val scaffoldState = rememberScaffoldState()
 
                     Scaffold (
                         topBar = {
