@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.LinearGradientShader
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -226,7 +227,10 @@ fun DecoupledSnackbarDemo(
                             onClick = {
                                 snackbarHostState.currentSnackbarData?.dismiss()
                             }) {
-                            
+                            Text(
+                                text = snackbarHostState.currentSnackbarData?.actionLabel?: "",
+                                style = TextStyle(color = Color.White)
+                            )
                         }
                     }
                 ) {
