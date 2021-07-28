@@ -71,6 +71,7 @@ class RecipeListViewModel @ViewModelInject constructor(
                     Log.d(TAG, "nextPage: ${result}")
                     appendRecipes(result)
                 }
+                loading.value = false
             }
         }
     }
@@ -95,6 +96,8 @@ class RecipeListViewModel @ViewModelInject constructor(
 
     private fun resetSearchState() {
         recipes.value = listOf()
+        page.value = 1
+        onChangeRecipeScrollPosition(0)
         if(selectedCategory.value?.value != query.value)
             clearSelectedCategory()
     }
