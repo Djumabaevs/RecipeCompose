@@ -39,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.djumabaevs.recipecompose.presentation.components.HeartAnimationDefinition.HeartButtonState.*
 import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimation
+import com.djumabaevs.recipecompose.presentation.components.util.SnackbarController
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -51,6 +52,8 @@ class RecipeListFragment : Fragment() {
     lateinit var application: BaseApplication
 
     private val viewModel: RecipeListViewModel by viewModels()
+
+    private val snackbarController = SnackbarController(lifecycleScope)
 
     @ExperimentalComposeUiApi
     override fun onCreateView(
@@ -78,11 +81,11 @@ class RecipeListFragment : Fragment() {
                                 onQueryChanged = viewModel::onQueryChanged,
                                 onExecuteSearch = {
                                     if(viewModel.selectedCategory.value?.value == "Milk") {
-                                        lifecycleScope.launch {
-                                            scaffoldState.snackbarHostState.showSnackbar(
+                                        snackbarController.getScope().launch {
+                                            snackbarController.showSnackbar(
+                                                scaffoldState = scaffoldState,
                                                 message = "Invalid category: Milk!",
                                                 actionLabel = "Hide",
-                                                duration = SnackbarDuration.Short
                                             )
                                         }
                                     } else run {

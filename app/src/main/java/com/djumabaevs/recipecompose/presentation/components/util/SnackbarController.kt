@@ -10,6 +10,10 @@ class SnackbarController(
 ) {
     private var snackbarJob: Job? = null
 
+    init {
+        cancelActiveJob()
+    }
+
     fun getScope() = scope
 
     fun showSnackbar(
