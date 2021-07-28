@@ -27,8 +27,9 @@ class SnackbarController(
                     message = message,
                     actionLabel = actionLabel
                 )
+                cancelActiveJob()
             }
-            cancelActiveJob()
+
         } else {
             cancelActiveJob()
             snackbarJob = scope.launch {
@@ -36,8 +37,8 @@ class SnackbarController(
                     message = message,
                     actionLabel = actionLabel
                 )
+                cancelActiveJob()
             }
-            cancelActiveJob()
         }
     }
 

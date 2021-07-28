@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
 
+const val PAGE_SIZE = 30
 
 class RecipeListViewModel @ViewModelInject constructor(
     private val repository: RecipeRepository,
@@ -20,14 +21,12 @@ class RecipeListViewModel @ViewModelInject constructor(
 ): ViewModel() {
 
     val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
-
     val query = mutableStateOf("")
-
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
-
     var categoryScrollPosition: Int = 0
-
     val loading = mutableStateOf(false)
+    val page = mutableStateOf(1)
+    private var recipeListScrollPosition = 0
 
 
 //    private val _recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
@@ -49,6 +48,18 @@ class RecipeListViewModel @ViewModelInject constructor(
             recipes.value = result
             loading.value = false
         }
+    }
+
+    private fun appendRecipes(recipe: List<Recipe>) {
+
+    }
+
+    private fun incrementPage() {
+        page.value = page.value + 1
+    }
+
+    fun onChangeRecipeScrollPosition(position: Int) {
+        recipeListScrollPosition = position
     }
 
     private fun clearSelectedCategory() {
