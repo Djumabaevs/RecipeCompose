@@ -1,5 +1,6 @@
 package com.djumabaevs.recipecompose.presentation.ui.recipeList
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.lifecycle.ViewModelInject
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.repository.RecipeRepository
+import com.djumabaevs.recipecompose.util.TAG
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
@@ -50,8 +52,33 @@ class RecipeListViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun appendRecipes(recipe: List<Recipe>) {
+    fun nextPage() {
+        viewModelScope.launch {
+            //prevent duplicate events due to recompose happening to quickly
+            if((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
+                loading.value = true
+                incrementPage()
+                Log.d(TAG, "nextPage: triggered: ${page.value}")
+            //just to show pagination, api is fast
+                delay(1000)
 
+                if(page.value > 1) {
+                    val result = repository.search(
+                        token = token,
+                        page = page.value,
+                        query = query.value
+                    )
+                    Log.d(TAG, "nextPage: ${result}")
+                    appendRecipes(result)
+                }
+            }
+        }
+    }
+
+    private fun appendRecipes(recipes: List<Recipe>) {
+        val current = ArrayList(this.recipes.value)
+        current.addAll(recipes)
+        this.recipes.value = current
     }
 
     private fun incrementPage() {
