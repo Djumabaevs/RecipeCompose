@@ -40,8 +40,7 @@ fun DefaultSnackbar(
                         }
                     }
                 }
-            ) {
-            }
+            )
         }
     )
 }
