@@ -84,6 +84,8 @@ class RecipeListFragment : Fragment() {
                             Text(text = "Show snackbar")
                         }
 
+                        DecoupledSnackbarDemo(snackbarHostState = snackbarHostState)
+
                     }
 
 /*
@@ -234,6 +236,7 @@ fun DecoupledSnackbarDemo(
                         }
                     }
                 ) {
+                    Text(text = snackbarHostState.currentSnackbarData?.message ?: "")
                     
                 }
             }
