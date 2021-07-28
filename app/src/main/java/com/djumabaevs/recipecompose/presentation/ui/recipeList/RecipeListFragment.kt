@@ -75,7 +75,19 @@ class RecipeListFragment : Fragment() {
                             SearchAppBar(
                                 query = query,
                                 onQueryChanged = viewModel::onQueryChanged,
-                                onExecuteSearch = viewModel::newSearch,
+                                onExecuteSearch = {
+                                    if(viewModel.selectedCategory.value?.value == "Milk") {
+                                        lifecycleScope.launch {
+                                            scaffoldState.snackbarHostState.showSnackbar(
+                                                message = "Invalid category: Milk!",
+                                                actionLabel = "Hide",
+                                                duration = SnackbarDuration.Short
+                                            )
+                                        }
+                                    } else run {
+                                        viewModel.newSearch()
+                                    }
+                                },
                                 scrollPosition = viewModel.categoryScrollPosition,
                                 selectedCategory = selectedCategory,
                                 onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
@@ -92,6 +104,10 @@ class RecipeListFragment : Fragment() {
                         },
                         drawerContent = {
                             MyDrawer()
+                        },
+                        scaffoldState = scaffoldState,
+                        snackbarHost = {
+                            scaffoldState.snackbarHostState
                         }
                             ) {
                         Box(modifier = Modifier
