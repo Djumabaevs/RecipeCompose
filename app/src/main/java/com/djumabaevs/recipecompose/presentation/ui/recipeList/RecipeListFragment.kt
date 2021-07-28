@@ -222,7 +222,12 @@ fun DecoupledSnackbarDemo(
             snackbar = {
                 Snackbar(
                     action = {
-
+                        TextButton(
+                            onClick = {
+                                snackbarHostState.currentSnackbarData?.dismiss()
+                            }) {
+                            
+                        }
                     }
                 ) {
                     
