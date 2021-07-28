@@ -136,8 +136,15 @@ class RecipeListFragment : Fragment() {
                                     }
                                 }
                             }
-
                             CircularIndeterminateProgressBar(isDisplayed = loading)
+
+                            DefaultSnackbar(
+                                snackbarHostState = scaffoldState.snackbarHostState,
+                                onDismiss = {
+                                    scaffoldState.snackbarHostState
+                                        .currentSnackbarData?.dismiss()
+                                }
+                            )
                         }
                     }
                 }
