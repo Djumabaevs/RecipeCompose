@@ -2,12 +2,14 @@ package com.djumabaevs.recipecompose.presentation.ui.recipeList
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Snackbar
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 //        viewModel.recipes.observe(viewLifecycleOwner, {recipes ->
 //
@@ -150,5 +152,57 @@ fun SimpleSnackbarDemo(
                 Text(text = "Hey look a snackbar")
             }
         }
+    }
+}
+
+//Column {
+//    Button(onClick = {
+//        lifecycleScope.launch {
+//            snackbarHostState.showSnackbar(
+//                message = "Here comes the compose snackbar!",
+//                actionLabel = "HIDE!",
+//                duration = SnackbarDuration.Short
+//            )
+//        }
+//    }) {
+//        Text(text = "Show snackbar")
+//    }
+//
+//    DecoupledSnackbarDemo(snackbarHostState = snackbarHostState)
+//
+//}
+
+@Composable
+fun DecoupledSnackbarDemo(
+    snackbarHostState: SnackbarHostState
+) {
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+        val snackbar = createRef()
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.constrainAs(snackbar) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            snackbar = {
+                Snackbar(
+                    action = {
+                        TextButton(
+                            onClick = {
+                                snackbarHostState.currentSnackbarData?.dismiss()
+                            }) {
+                            Text(
+                                text = snackbarHostState.currentSnackbarData?.actionLabel?: "",
+                                style = TextStyle(color = Color.White)
+                            )
+                        }
+                    }
+                ) {
+                    Text(text = snackbarHostState.currentSnackbarData?.message ?: "")
+
+                }
+            }
+        )
     }
 }

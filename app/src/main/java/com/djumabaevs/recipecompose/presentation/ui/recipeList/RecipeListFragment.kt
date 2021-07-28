@@ -68,27 +68,8 @@ class RecipeListFragment : Fragment() {
                     val query = viewModel.query.value
                     val selectedCategory = viewModel.selectedCategory.value
                     val loading = viewModel.loading.value
-
                     val snackbarHostState = remember {SnackbarHostState()}
 
-                    Column {
-                        Button(onClick = {
-                            lifecycleScope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = "Here comes the compose snackbar!",
-                                    actionLabel = "HIDE!",
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
-                        }) {
-                            Text(text = "Show snackbar")
-                        }
-
-                        DecoupledSnackbarDemo(snackbarHostState = snackbarHostState)
-
-                    }
-
-/*
                     Scaffold (
                         topBar = {
                             SearchAppBar(
@@ -142,7 +123,7 @@ class RecipeListFragment : Fragment() {
 
                             CircularIndeterminateProgressBar(isDisplayed = loading)
                         }
-                    }*/
+                    }
                 }
             }
         }
@@ -209,40 +190,7 @@ fun MyDrawer(
     }
 }
 
-@Composable
-fun DecoupledSnackbarDemo(
-    snackbarHostState: SnackbarHostState
-) {
-    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val snackbar = createRef()
-        SnackbarHost(
-            hostState = snackbarHostState,
-            modifier = Modifier.constrainAs(snackbar) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            snackbar = {
-                Snackbar(
-                    action = {
-                        TextButton(
-                            onClick = {
-                                snackbarHostState.currentSnackbarData?.dismiss()
-                            }) {
-                            Text(
-                                text = snackbarHostState.currentSnackbarData?.actionLabel?: "",
-                                style = TextStyle(color = Color.White)
-                            )
-                        }
-                    }
-                ) {
-                    Text(text = snackbarHostState.currentSnackbarData?.message ?: "")
-                    
-                }
-            }
-        )
-    }
-}
+
 
 
 
