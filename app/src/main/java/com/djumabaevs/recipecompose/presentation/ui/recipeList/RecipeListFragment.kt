@@ -92,7 +92,9 @@ class RecipeListFragment : Fragment() {
                         bottomBar = {
                                     MyBottomBar()
                         },
-                        drawerContent = {}
+                        drawerContent = {
+                            MyDrawer()
+                        }
                             ) {
                         Box(modifier = Modifier
                             .fillMaxSize()
@@ -218,7 +220,7 @@ fun MyBottomBar() {
 
 @Composable
 fun MyDrawer(
-    navController: NavController
+//    navController: NavController
 ) {
     Column {
         Text(text = "item1")
@@ -296,5 +298,12 @@ fun MyDrawer(
 /* val view = inflater.inflate(R.layout.fragment_recipe_list,
  container, false)
  return view*/
+
+
+
+
+                  //demo snackbar and snackbar host state//
+
+val snackBarHostState = remember {SnackbarHostState()}
 
 
