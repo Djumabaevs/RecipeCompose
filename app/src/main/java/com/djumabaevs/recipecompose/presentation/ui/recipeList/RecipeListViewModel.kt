@@ -19,7 +19,7 @@ const val PAGE_SIZE = 30
 const val STATE_KEY_PAGE = "recipe.state.page.key"
 const val STATE_KEY_QUERY = "recipe.state.query.key"
 const val STATE_KEY_LIST_POSITION = "recipe.state.query.list_position"
-const val STATE_KEY_SELECTED_CATEGORY = "recipe.state.query.selected_category"a
+const val STATE_KEY_SELECTED_CATEGORY = "recipe.state.query.selected_category"
 
 class RecipeListViewModel @ViewModelInject constructor(
     private val repository: RecipeRepository,
@@ -102,11 +102,11 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     private fun incrementPage() {
-        page.value = page.value + 1
+        setPage(page.value + 1)
     }
 
     fun onChangeRecipeScrollPosition(position: Int) {
-        recipeListScrollPosition = position
+        setListScrollPosition(position = position)
     }
 
     private fun clearSelectedCategory() {
@@ -135,4 +135,13 @@ class RecipeListViewModel @ViewModelInject constructor(
         categoryScrollPosition = position
     }
 
+    private fun setListScrollPosition(position: Int) {
+        recipeListScrollPosition = position
+        savedStateHandle.set(STATE_KEY_LIST_POSITION, position)
+    }
+
+    private fun setPage(page: Int) {
+        this.page.value = page
+        savedStateHandle.set(STATE_KEY_PAGE, page)
+    }
 }

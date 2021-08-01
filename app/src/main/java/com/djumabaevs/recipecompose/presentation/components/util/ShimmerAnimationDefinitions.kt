@@ -38,7 +38,7 @@ fun ShimmerAnimation() {
         targetValue = 1000f,
         animationSpec = infiniteRepeatable(
             tween(durationMillis = 1200, easing = FastOutSlowInEasing),
-            RepeatMode.Restart
+            RepeatMode.Reverse
         )
     )
     val brush = Brush.linearGradient(
