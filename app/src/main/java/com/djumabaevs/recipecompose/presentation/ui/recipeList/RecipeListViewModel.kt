@@ -40,6 +40,20 @@ class RecipeListViewModel @ViewModelInject constructor(
 //    val recipes: LiveData<List<Recipe>> get() = _recipes
 
     init {
+
+        savedStateHandle.get<Int>(STATE_KEY_PAGE)?.let { p ->
+            setPage(p)
+        }
+        savedStateHandle.get<String>(STATE_KEY_QUERY)?.let { q ->
+            setQuery(q)
+        }
+        savedStateHandle.get<Int>(STATE_KEY_LIST_POSITION)?.let { p ->
+            setListScrollPosition(p)
+        }
+        savedStateHandle.get<FoodCategory>(STATE_KEY_SELECTED_CATEGORY)?.let {c ->
+            setSelectedCategory(c)
+        }
+
         onTriggerEvent(NewSearchEvent)
     }
 
