@@ -39,7 +39,20 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     fun onTriggerEvent(event: RecipeListEvent) {
+        viewModelScope.launch { 
+            try {
+                when(event) {
+                    is RecipeListEvent.NewSearchEvent -> {
 
+                    }
+                    is RecipeListEvent.NewPageEvent -> {
+
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "onTriggerEvent: Exception: ${e}, ${e.cause}")
+            }
+        }
     }
 
     //usecase 1
