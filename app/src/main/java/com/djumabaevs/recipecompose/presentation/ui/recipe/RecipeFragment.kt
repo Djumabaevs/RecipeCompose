@@ -20,6 +20,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipeFragment: Fragment() {
 
+    private var recipeId: Int? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.getInt("recipeId")?.let { rId ->
+            recipeId = rId
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +38,7 @@ class RecipeFragment: Fragment() {
             setContent {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "RECIPE FRAGMENT",
+                        text = recipeId?.let{"Selected recipe: ${recipeId}"}?: "Loading...",
                         style = TextStyle(
                             fontSize = 21.sp
                         )
