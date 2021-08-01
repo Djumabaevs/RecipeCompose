@@ -38,6 +38,7 @@ class RecipeListViewModel @ViewModelInject constructor(
         newSearch()
     }
 
+    //usecase 1
      fun newSearch() {
         viewModelScope.launch {
             loading.value = true
@@ -51,7 +52,7 @@ class RecipeListViewModel @ViewModelInject constructor(
             loading.value = false
         }
     }
-
+    //usecase 2
     fun nextPage() {
         viewModelScope.launch {
             //prevent duplicate events due to recompose happening to quickly
