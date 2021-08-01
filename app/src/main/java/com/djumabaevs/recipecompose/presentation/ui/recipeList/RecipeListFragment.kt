@@ -105,58 +105,18 @@ class RecipeListFragment : Fragment() {
                             ) {
                             }
                         },
-                        bottomBar = {
-                                    MyBottomBar()
-                        },
-                        drawerContent = {
-                            MyDrawer()
-                        },
+//                        bottomBar = {
+//                                    MyBottomBar()
+//                        },
+//                        drawerContent = {
+//                            MyDrawer()
+//                        },
                         scaffoldState = scaffoldState,
                         snackbarHost = {
                             scaffoldState.snackbarHostState
                         }
                             ) {
-                        Box(modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = MaterialTheme.colors.background)) {
-                            if(loading) {  //&&recipes.isEmpty()
 
-                                Surface(color = MaterialTheme.colors.background) {
-                                    LazyColumn {
-                                        repeat(5) {
-                                            item {
-                                                ShimmerAnimation()
-                                            }
-                                        }
-                                    }
-                                }
-
-                            } else {
-                                LazyColumn {
-                                    itemsIndexed(
-                                        items = recipes
-                                    ) { index, recipe ->
-                                        viewModel.onChangeRecipeScrollPosition(index)
-
-                                        if((index + 1) >= (page * PAGE_SIZE) && !loading) {
-                                            viewModel.onTriggerEvent(NewPageEvent)
-                                        }
-
-                                        RecipeCard(recipe = recipe, onClick = {})
-                                    }
-                                }
-                            }
-                            CircularIndeterminateProgressBar(isDisplayed = loading)
-
-                            DefaultSnackbar(
-                                snackbarHostState = scaffoldState.snackbarHostState,
-                                onDismiss = {
-                                    scaffoldState.snackbarHostState
-                                        .currentSnackbarData?.dismiss()
-                                },
-                                modifier = Modifier.align(Alignment.BottomCenter)
-                            )
-                        }
                     }
                 }
             }

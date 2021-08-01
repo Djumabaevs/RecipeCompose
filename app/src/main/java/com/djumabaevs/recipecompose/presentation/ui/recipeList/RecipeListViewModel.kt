@@ -87,6 +87,10 @@ class RecipeListViewModel @ViewModelInject constructor(
                 query = query.value
             )
             results.addAll(result)
+            if(p == page.value) {
+                recipes.value = results
+                loading.value = false
+            }
         }
     }
 
