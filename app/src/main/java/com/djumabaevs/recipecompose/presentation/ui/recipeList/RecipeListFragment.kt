@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.djumabaevs.recipecompose.presentation.BaseApplication
 import com.djumabaevs.recipecompose.presentation.components.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -116,7 +117,18 @@ class RecipeListFragment : Fragment() {
                             scaffoldState.snackbarHostState
                         }
                             ) {
-
+                        RecipeList(
+                            loading = loading,
+                            recipes = recipes,
+                            onChangeRecipeScrollPosition = viewModel::onChangeRecipeScrollPosition,
+                            page = page,
+                            onTriggerEvent = {
+                                 viewModel.onTriggerEvent(NewPageEvent)
+                            },
+                            scaffoldState = scaffoldState       ,
+                            snackbarController = snackbarController,
+                            navController = findNavController()
+                        )
                     }
                 }
             }

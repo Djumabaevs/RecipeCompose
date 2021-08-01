@@ -1,5 +1,6 @@
 package com.djumabaevs.recipecompose.presentation.components
 
+import android.os.Bundle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,13 +12,17 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import com.djumabaevs.recipecompose.R
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimation
 import com.djumabaevs.recipecompose.presentation.components.util.SnackbarController
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.PAGE_SIZE
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListEvent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 @Composable
 fun RecipeList(
     loading: Boolean,
@@ -26,7 +31,8 @@ fun RecipeList(
     page: Int,
     onTriggerEvent: (RecipeListEvent) -> Unit,
     scaffoldState: ScaffoldState,
-    snackbarController: SnackbarController
+    snackbarController: SnackbarController,
+    navController: NavController
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -57,7 +63,10 @@ fun RecipeList(
                     RecipeCard(
                         recipe = recipe,
                         onClick = {
-                            if() {
+                            if(recipe.id != null) {
+                                val bundle = Bundle()
+                                bundle.putInt("recipeId", recipe.id!!)
+                                navController.navigate(R.id.viewRecipe, bundle)
 
                             } else {
                                 snackbarController.getScope().launch {
