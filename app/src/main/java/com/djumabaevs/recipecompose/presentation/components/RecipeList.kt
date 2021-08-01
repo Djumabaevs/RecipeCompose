@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.presentation.components.util.ShimmerAnimation
+import com.djumabaevs.recipecompose.presentation.components.util.SnackbarController
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.PAGE_SIZE
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListEvent
+import kotlinx.coroutines.launch
 
 @Composable
 fun RecipeList(
@@ -23,7 +25,8 @@ fun RecipeList(
     onChangeRecipeScrollPosition: (Int) -> Unit,
     page: Int,
     onTriggerEvent: (RecipeListEvent) -> Unit,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    snackbarController: SnackbarController
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
@@ -51,7 +54,21 @@ fun RecipeList(
                         onTriggerEvent(RecipeListEvent.NewPageEvent)
                     }
 
-                    RecipeCard(recipe = recipe, onClick = {})
+                    RecipeCard(
+                        recipe = recipe,
+                        onClick = {
+                            if() {
+
+                            } else {
+                                snackbarController.getScope().launch {
+                                    snackbarController.showSnackbar(
+                                        scaffoldState = scaffoldState,
+                                        message = "Recipe Error",
+                                        actionLabel = "OK"
+                                    )
+                                }
+                            }
+                        })
                 }
             }
         }
