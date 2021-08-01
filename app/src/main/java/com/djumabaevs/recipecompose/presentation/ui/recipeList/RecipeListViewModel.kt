@@ -38,6 +38,10 @@ class RecipeListViewModel @ViewModelInject constructor(
         newSearch()
     }
 
+    fun onTriggerEvent(event: RecipeListEvent) {
+
+    }
+
     //usecase 1
      fun newSearch() {
         viewModelScope.launch {
