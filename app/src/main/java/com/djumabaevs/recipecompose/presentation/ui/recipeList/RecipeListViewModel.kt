@@ -110,6 +110,7 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     private fun clearSelectedCategory() {
+        setSelectedCategory(null)
         selectedCategory.value = null
     }
 
@@ -122,12 +123,12 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     fun onQueryChanged(query: String) {
-        this.query.value = query
+        setQuery(query)
     }
 
     fun onSelectedCategoryChanged(category: String) {
         val newCategory = getFoodCategory(category)
-        selectedCategory.value = newCategory
+        setSelectedCategory(newCategory)
         onQueryChanged(category)
     }
 
@@ -143,5 +144,15 @@ class RecipeListViewModel @ViewModelInject constructor(
     private fun setPage(page: Int) {
         this.page.value = page
         savedStateHandle.set(STATE_KEY_PAGE, page)
+    }
+
+    private fun setSelectedCategory(category: FoodCategory?) {
+        selectedCategory.value = category
+        savedStateHandle.set(STATE_KEY_SELECTED_CATEGORY, category)
+    }
+
+    private fun setQuery(query: String) {
+        this.query.value = query
+        savedStateHandle.set(STATE_KEY_QUERY, query)
     }
 }
