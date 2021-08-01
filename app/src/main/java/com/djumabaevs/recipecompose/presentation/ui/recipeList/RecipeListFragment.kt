@@ -43,6 +43,7 @@ import com.djumabaevs.recipecompose.presentation.components.util.SnackbarControl
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListEvent.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -90,7 +91,7 @@ class RecipeListFragment : Fragment() {
                                             )
                                         }
                                     } else run {
-                                        viewModel.onTriggerEvent(RecipeListEvent.NewSearchEvent)
+                                        viewModel.onTriggerEvent(NewSearchEvent)
                                     }
                                 },
                                 scrollPosition = viewModel.categoryScrollPosition,
@@ -118,7 +119,7 @@ class RecipeListFragment : Fragment() {
                         Box(modifier = Modifier
                             .fillMaxSize()
                             .background(color = MaterialTheme.colors.background)) {
-                            if(loading && recipes.isEmpty()) {
+                            if(loading) {  //&&recipes.isEmpty()
 
                                 Surface(color = MaterialTheme.colors.background) {
                                     LazyColumn {
@@ -138,7 +139,7 @@ class RecipeListFragment : Fragment() {
                                         viewModel.onChangeRecipeScrollPosition(index)
 
                                         if((index + 1) >= (page * PAGE_SIZE) && !loading) {
-                                            viewModel.onTriggerEvent(RecipeListEvent.NewPageEvent)
+                                            viewModel.onTriggerEvent(NewPageEvent)
                                         }
 
                                         RecipeCard(recipe = recipe, onClick = {})
