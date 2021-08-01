@@ -14,6 +14,7 @@ import com.djumabaevs.recipecompose.util.TAG
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
+import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListEvent.*
 
 const val PAGE_SIZE = 30
 
@@ -35,18 +36,18 @@ class RecipeListViewModel @ViewModelInject constructor(
 //    val recipes: LiveData<List<Recipe>> get() = _recipes
 
     init {
-        newSearch()
+        onTriggerEvent(NewSearchEvent)
     }
 
     fun onTriggerEvent(event: RecipeListEvent) {
         viewModelScope.launch { 
             try {
                 when(event) {
-                    is RecipeListEvent.NewSearchEvent -> {
-
+                    is NewSearchEvent -> {
+                        newSearch()
                     }
-                    is RecipeListEvent.NewPageEvent -> {
-
+                    is NewPageEvent -> {
+                        nextPage()
                     }
                 }
             } catch (e: Exception) {
@@ -56,8 +57,7 @@ class RecipeListViewModel @ViewModelInject constructor(
     }
 
     //usecase 1
-     fun newSearch() {
-        viewModelScope.launch {
+     private suspend fun newSearch() {
             loading.value = true
             delay(2000)
             val result = repository.search(
@@ -67,11 +67,9 @@ class RecipeListViewModel @ViewModelInject constructor(
             )
             recipes.value = result
             loading.value = false
-        }
     }
     //usecase 2
-    fun nextPage() {
-        viewModelScope.launch {
+    private suspend fun nextPage() {
             //prevent duplicate events due to recompose happening to quickly
             if((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
                 loading.value = true
@@ -91,7 +89,6 @@ class RecipeListViewModel @ViewModelInject constructor(
                 }
                 loading.value = false
             }
-        }
     }
 
     private fun appendRecipes(recipes: List<Recipe>) {
