@@ -69,11 +69,17 @@ fun RecipeView(
                                 "Updated $updated by $publisher"
                             } else {
                                 "By $publisher"
-                            }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            style = MaterialTheme.typography.caption
                         )
                     }
-                }
+                    recipe.description?.let {description ->
 
+                    }
+                }
             }
         }
     }
