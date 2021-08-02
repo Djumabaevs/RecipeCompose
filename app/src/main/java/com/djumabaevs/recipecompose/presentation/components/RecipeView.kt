@@ -3,6 +3,7 @@ package com.djumabaevs.recipecompose.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,7 +49,16 @@ fun RecipeView(
                             text = title,
                             modifier = Modifier
                                 .fillMaxWidth(0.85f)
-                                .wrapContentWidth(Alignment.Start)
+                                .wrapContentWidth(Alignment.Start),
+                            style = MaterialTheme.typography.h3
+                        )
+                        val rank =recipe.rating.toString()
+                        Text(
+                            text = rank,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentWidth(Alignment.End),
+                            style = MaterialTheme.typography.h3
                         )
                     }
                 }
