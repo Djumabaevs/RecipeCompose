@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.TextStyle
@@ -23,6 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.djumabaevs.recipecompose.presentation.BaseApplication
 import com.djumabaevs.recipecompose.presentation.components.CircularIndeterminateProgressBar
+import com.djumabaevs.recipecompose.presentation.components.DefaultSnackbar
 import com.djumabaevs.recipecompose.presentation.components.RecipeView
 import com.djumabaevs.recipecompose.presentation.components.util.SnackbarController
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
@@ -98,6 +100,15 @@ class RecipeFragment: Fragment() {
                             }
                             CircularIndeterminateProgressBar(
                                 isDisplayed = loading)
+                            DefaultSnackbar(
+                                snackbarHostState = scaffoldState.snackbarHostState,
+                                onDismiss = {
+                                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                                },
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                            )
+
                         }
 
                     }
