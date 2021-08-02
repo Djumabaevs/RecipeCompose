@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.djumabaevs.recipecompose.presentation.BaseApplication
 import com.djumabaevs.recipecompose.presentation.ui.recipe.RecipeEvent.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -23,12 +24,15 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipeFragment: Fragment() {
 
 //    private var recipeId: MutableState<Int> = mutableStateOf(-1)
+    @Inject
+    lateinit var application: BaseApplication
 
     private val viewModel: RecipeViewModel by viewModels()
 

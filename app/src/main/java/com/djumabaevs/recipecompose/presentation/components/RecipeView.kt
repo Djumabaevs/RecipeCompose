@@ -76,9 +76,15 @@ fun RecipeView(
                             style = MaterialTheme.typography.caption
                         )
                     }
-                    recipe.description?.let {description ->
-
-                    }
+                   for(ingredient in recipe.ingredients!!) {
+                        Text(
+                            text = ingredient,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            style = MaterialTheme.typography.body1
+                        )
+                   }
                 }
             }
         }
