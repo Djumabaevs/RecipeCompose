@@ -22,7 +22,7 @@ fun RecipeView(
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        items(50) {
+        items(1) {
             recipe.featuredImage?.let { url ->
                 val image = LoadPicture(url = url, defaultImage = DEFAULT_RECIPE_IMAGE).value
                 image?.let { img ->
@@ -44,7 +44,7 @@ fun RecipeView(
                 recipe.title?.let { title ->
                     Row(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)) {
+                        .padding(bottom = 8.dp)) {
                         Text(
                             text = title,
                             modifier = Modifier
