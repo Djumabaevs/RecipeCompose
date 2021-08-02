@@ -22,6 +22,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.djumabaevs.recipecompose.presentation.BaseApplication
+import com.djumabaevs.recipecompose.presentation.components.CircularIndeterminateProgressBar
+import com.djumabaevs.recipecompose.presentation.components.RecipeView
 import com.djumabaevs.recipecompose.presentation.components.util.SnackbarController
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
 import com.djumabaevs.recipecompose.presentation.ui.recipe.RecipeEvent.*
@@ -89,9 +91,13 @@ class RecipeFragment: Fragment() {
                                             message = "An error occurred with this recipe.",
                                             actionLabel = "OK"
                                         )
+                                    } else {
+                                        RecipeView(recipe = it)
                                     }
                                 }
                             }
+                            CircularIndeterminateProgressBar(
+                                isDisplayed = loading)
                         }
 
                     }
