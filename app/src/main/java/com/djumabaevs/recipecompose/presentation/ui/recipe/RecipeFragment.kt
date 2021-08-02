@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -16,7 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.djumabaevs.recipecompose.presentation.BaseApplication
+import com.djumabaevs.recipecompose.presentation.components.util.SnackbarController
+import com.djumabaevs.recipecompose.presentation.theme.AppTheme
 import com.djumabaevs.recipecompose.presentation.ui.recipe.RecipeEvent.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +38,8 @@ class RecipeFragment: Fragment() {
 //    private var recipeId: MutableState<Int> = mutableStateOf(-1)
     @Inject
     lateinit var application: BaseApplication
+
+    private val snackbarController = SnackbarController(lifecycleScope)
 
     private val viewModel: RecipeViewModel by viewModels()
 
@@ -60,15 +67,29 @@ class RecipeFragment: Fragment() {
             setContent {
                 val loading = viewModel.loading.value
                 val recipe = viewModel.recipe.value
+                val scaffoldState = rememberScaffoldState()
 
-                Column(modifier = Modifier.padding(16.dp)) {
+                AppTheme(darkTheme = application.isDark.value) {
+                    Scaffold {
+
+                    }
+                }
+
+
+
+
+
+
+
+
+/*                Column(modifier = Modifier.padding(16.dp)) {
                     Text(
 //                        text = recipeId.let{"Selected recipe: ${recipeId}"} ?: "Loading...",
-                        /*text = if(recipeId.value != -1) {
+                        *//*text = if(recipeId.value != -1) {
                             "Selected recipe: ${recipeId.value}"
                         } else {
                             "Loading ..."
-                        }*/
+                        }*//*
                         text =  recipe?.let {
                            "Selected recipe title: ${recipe.title}"
                         }?: "Loading..."
@@ -77,7 +98,7 @@ class RecipeFragment: Fragment() {
                             fontSize = 21.sp
                         )
                     )
-                }
+                }*/
             }
         }
     }
