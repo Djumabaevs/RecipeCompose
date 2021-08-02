@@ -64,6 +64,13 @@ fun RecipeView(
                     }
                     recipe.publisher?.let {publisher ->
                         val updated = recipe.dateUpdated
+                        Text(
+                            text = if(updated != null) {
+                                "Updated $updated by $publisher"
+                            } else {
+                                "By $publisher"
+                            }
+                        )
                     }
                 }
 
