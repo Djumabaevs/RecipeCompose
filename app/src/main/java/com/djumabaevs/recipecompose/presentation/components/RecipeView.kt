@@ -57,9 +57,13 @@ fun RecipeView(
                             text = rank,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .wrapContentWidth(Alignment.End),
-                            style = MaterialTheme.typography.h3
+                                .wrapContentWidth(Alignment.End)
+                                .align(Alignment.CenterVertically),
+                            style = MaterialTheme.typography.h5
                         )
+                    }
+                    recipe.publisher?.let {publisher ->
+                        val updated = recipe.dateUpdated
                     }
                 }
 
