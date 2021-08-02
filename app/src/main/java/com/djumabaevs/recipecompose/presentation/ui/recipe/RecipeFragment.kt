@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -70,7 +72,27 @@ class RecipeFragment: Fragment() {
                 val scaffoldState = rememberScaffoldState()
 
                 AppTheme(darkTheme = application.isDark.value) {
-                    Scaffold {
+                    Scaffold(
+                        scaffoldState = scaffoldState,
+                        snackbarHost = {
+                            scaffoldState.snackbarHostState
+                        }
+                    ) {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            if(loading && recipe == null) {
+                                Text("Loading...")
+                            } else {
+                                recipe?.let{
+                                    if(it.id == 1) {
+                                        snackbarController.showSnackbar(
+                                            scaffoldState = scaffoldState,
+                                            message = "An error occurred with this recipe.",
+                                            actionLabel = "OK"
+                                        )
+                                    }
+                                }
+                            }
+                        }
 
                     }
                 }
