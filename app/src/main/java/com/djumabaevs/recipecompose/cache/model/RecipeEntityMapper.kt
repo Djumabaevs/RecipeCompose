@@ -49,4 +49,14 @@ class RecipeEntityMapper: DomainMapper<RecipeEntity, Recipe> {
         return ingredientsString.toString()
     }
 
+    private fun convertIngredientsToList(ingredientsString: String?): List<String>{
+        val list: ArrayList<String> = ArrayList()
+        ingredientsString?.let {
+            for(ingredient in it.split(",")){
+                list.add(ingredient)
+            }
+        }
+        return list
+    }
+
 }
