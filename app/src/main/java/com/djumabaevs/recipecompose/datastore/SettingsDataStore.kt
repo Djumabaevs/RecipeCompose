@@ -19,11 +19,14 @@ import javax.inject.Singleton
 private val Context.dataStore by preferencesDataStore("settings")
 
 //before we should inject base application instance with hilt
+
 @Singleton
 class SettingsDataStore
-    (context: Context){
+@Inject constructor(
+    app: BaseApplication
+) {
 
-    private val datastore = context.dataStore
+    private val datastore = app.dataStore
 
 //    private val datastore: DataStore<Preferences> = app.createDataStore(name = "settings")
 
@@ -33,18 +36,18 @@ class SettingsDataStore
         observeDataStore()
     }
 
-    val isDark = mutableStateOf(false)
+    private val isDark = mutableStateOf(false)
 
-    fun toggleTheme(){
+    fun toggleTheme() {
         scope.launch {
             datastore.edit { preferences ->
-                val current = preferences[DARK_THEME_KEY]?: false
+                val current = preferences[DARK_THEME_KEY] ?: false
                 preferences[DARK_THEME_KEY] = !current
             }
         }
     }
 
-    private fun observeDataStore(){
+    private fun observeDataStore() {
         datastore.data.onEach { preferences ->
             preferences[DARK_THEME_KEY]?.let { isDarkTheme ->
                 isDark.value = isDarkTheme
@@ -52,7 +55,7 @@ class SettingsDataStore
         }.launchIn(scope)
     }
 
-    companion object{
+    companion object {
         private val DARK_THEME_KEY = booleanPreferencesKey("dark_theme_key")
     }
 }
