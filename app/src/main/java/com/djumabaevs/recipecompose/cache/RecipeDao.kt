@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.djumabaevs.recipecompose.cache.model.RecipeEntity
+import com.djumabaevs.recipecompose.util.RECIPE_PAGINATION_PAGE_SIZE
 
 @Dao
 interface RecipeDao {
@@ -83,4 +84,3 @@ interface RecipeDao {
     ): List<RecipeEntity>
 }
 
-}
