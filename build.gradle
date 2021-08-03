@@ -12,9 +12,10 @@ buildscript {
 
         def hilt = "2.28-alpha"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt"
+
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1"
     }
 }
-
 
 
 task clean(type: Delete) {

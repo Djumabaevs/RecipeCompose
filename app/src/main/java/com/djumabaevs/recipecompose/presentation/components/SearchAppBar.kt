@@ -1,10 +1,6 @@
-package com.djumabaevs.recipecompose.presentation.components
-
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,16 +13,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.djumabaevs.recipecompose.presentation.components.FoodCategoryChip
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.FoodCategory
-import com.djumabaevs.recipecompose.presentation.ui.recipeList.getAllFoodCategories
 import kotlinx.coroutines.launch
 
 @ExperimentalComposeUiApi
@@ -35,117 +29,75 @@ fun SearchAppBar(
     query: String,
     onQueryChanged: (String) -> Unit,
     onExecuteSearch: () -> Unit,
-    scrollPosition: Int,
+    categories: List<FoodCategory>,
     selectedCategory: FoodCategory?,
     onSelectedCategoryChanged: (String) -> Unit,
-    onChangeCategoryScrollPosition: (Int) -> Unit,
     onToggleTheme: () -> Unit,
-    function: () -> Unit,
 ) {
-
+    val keyboardController = LocalSoftwareKeyboardController.current
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
+        color = MaterialTheme.colors.secondary,
         elevation = 8.dp,
-        color = MaterialTheme.colors.surface
     ) {
-
         Column {
-
             Row(modifier = Modifier.fillMaxWidth()) {
-
-//                            val focusManager = LocalFocusManager.current
-                val keyboardController = LocalSoftwareKeyboardController.current
                 TextField(
-                    value = query,
                     modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .padding(8.dp),
-                    onValueChange = { newValue ->
-                        onQueryChanged(newValue)
-                    },
-                    label = {
-                        Text(text = "Search")
-                    },
+                        .fillMaxWidth(.9f)
+                        .padding(8.dp)
+                    ,
+                    value = query,
+                    onValueChange = { onQueryChanged(it) },
+                    label = { Text(text = "Search") },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Search
+                        imeAction = ImeAction.Done,
                     ),
-                    leadingIcon = {
-                        Icon(Icons.Filled.Search, contentDescription = "icon")
-                    },
                     keyboardActions = KeyboardActions(
-                        onSearch = {
-                            onExecuteSearch()
-                        },
                         onDone = {
-//                                        focusManager.clearFocus()
+                            onExecuteSearch()
                             keyboardController?.hideSoftwareKeyboard()
-                        }
+                        },
                     ),
-                    textStyle = TextStyle(
-                        color = MaterialTheme.colors.onSurface,
-                    ),
-                    colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = MaterialTheme.colors.surface,
-                    )
+                    leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search Icon") },
+                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                    colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface),
                 )
-//                            Spacer(modifier = Modifier.padding(10.dp))
-
                 ConstraintLayout(
                     modifier = Modifier.align(Alignment.CenterVertically)
                 ) {
-                    val menu = createRef()
+                    val (menu) = createRefs()
                     IconButton(
-                        onClick = onToggleTheme,
                         modifier = Modifier
                             .constrainAs(menu) {
                                 end.linkTo(parent.end)
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                            }
+                                linkTo(top = parent.top, bottom = parent.bottom)
+                            },
+                        onClick = onToggleTheme,
                     ) {
-                        val icon : ImageVector = Icons.Filled.MoreVert
-                        Icon(icon, "menu")
+                        Icon(Icons.Filled.MoreVert, contentDescription = "Toggle Dark/Light Theme")
                     }
-
                 }
             }
-
             val scrollState = rememberLazyListState()
-            val scope = rememberCoroutineScope()
-
             LazyRow(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(start = 8.dp, bottom = 8.dp),
-                state = scrollState
+                state = scrollState,
             ) {
-                items(50) {
-                    scope.launch {
-                        scrollState
-                            .scrollToItem(
-                                scrollPosition)
-                    }
-
-
-                    for(category in getAllFoodCategories()) {
-                        FoodCategoryChip(
-                            category = category.value,
-                            isSelected = selectedCategory == category,
-                            onSelectedCategoryChanged = {
-                                onSelectedCategoryChanged(it)
-                                onChangeCategoryScrollPosition(
-                                    scrollState.firstVisibleItemIndex
-                                )
-                            },
-                            onExecuteSearch = {
-                                onExecuteSearch()
-//                                                viewModel.onQueryChanged(it)
-//                                                viewModel.newSearch(it)
-                            }
-                        )
-                    }
+                items(categories){
+                    FoodCategoryChip(
+                        category = it.value,
+                        isSelected = selectedCategory == it,
+                        onSelectedCategoryChanged = {
+                            onSelectedCategoryChanged(it)
+                        },
+                        onExecuteSearch = {
+                            onExecuteSearch()
+                        },
+                    )
                 }
             }
         }

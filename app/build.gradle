@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id "de.mannodermaus.android-junit5"
 }
 
 android {
@@ -50,7 +51,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
 
-    def app_compat = "1.2.0"
+    def app_compat = "1.3.0-beta01"
     implementation "androidx.appcompat:appcompat:$app_compat"
 
     def material = "1.2.1"
@@ -62,7 +63,7 @@ dependencies {
     def androidx_ui = "1.0.0-alpha07"
     implementation "androidx.ui:ui-tooling:$androidx_ui"
 
-    def compose = "1.0.0-beta01"
+    def compose = "1.0.0-beta05"
     implementation "androidx.compose.ui:ui:$compose"
     implementation "androidx.compose.foundation:foundation:$compose"
     implementation "androidx.compose.runtime:runtime-livedata:$compose"
@@ -96,4 +97,65 @@ dependencies {
     def glide = "4.11.0"
     implementation "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
+
+    def room_version = "2.3.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // optional - RxJava2 support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    // optional - Paging 3 Integration
+    implementation "androidx.room:room-paging:2.4.0-alpha04"
+
+    //Datastore
+
+    implementation "androidx.datastore:datastore:1.0.0-rc02"
+
+    // optional - RxJava2 support
+    implementation "androidx.datastore:datastore-rxjava2:1.0.0-rc02"
+
+    // optional - RxJava3 support
+    implementation "androidx.datastore:datastore-rxjava3:1.0.0-rc02"
+
+    //Junit5
+
+    // (Required) Writing and executing Unit Tests on the JUnit Platform
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+
+    // (Optional) If you need "Parameterized Tests"
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.1")
+
+    //Accompanist coil
+
+    implementation 'com.google.accompanist:accompanist-coil:0.7.1'
+
+    //OkHttp
+
+    // define a BOM and its version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    //junit5 test
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+
+
+
 }

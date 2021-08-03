@@ -1,5 +1,6 @@
 package com.djumabaevs.recipecompose.presentation.ui.recipeList
 
+import SearchAppBar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListEvent.*
 
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipeListFragment : Fragment() {
@@ -57,15 +60,13 @@ class RecipeListFragment : Fragment() {
 
     private val snackbarController = SnackbarController(lifecycleScope)
 
+    @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
-
         return ComposeView(requireContext()).apply {
             setContent {
 
@@ -95,20 +96,16 @@ class RecipeListFragment : Fragment() {
                                                 actionLabel = "Hide",
                                             )
                                         }
-                                    } else run {
+                                    } else  {
                                         viewModel.onTriggerEvent(NewSearchEvent)
                                     }
                                 },
-                                scrollPosition = viewModel.categoryScrollPosition,
+                                categories = getAllFoodCategories(),
                                 selectedCategory = selectedCategory,
                                 onSelectedCategoryChanged = viewModel::onSelectedCategoryChanged,
-                                onChangeCategoryScrollPosition =
-                                viewModel::onChangeCategoryScrollPosition,
-                                onToggleTheme = {
-                                    application.toggleLightTheme()
-                                }
-                            ) {
-                            }
+                                onToggleTheme = application::toggleLightTheme
+
+                            )
                         },
 //                        bottomBar = {
 //                                    MyBottomBar()
@@ -121,18 +118,18 @@ class RecipeListFragment : Fragment() {
                             scaffoldState.snackbarHostState
                         }
                             ) {
-                        RecipeList(
-                            loading = loading,
-                            recipes = recipes,
-                            onChangeRecipeScrollPosition = viewModel::onChangeRecipeScrollPosition,
-                            page = page,
-                            onTriggerEvent = {
-                                 viewModel.onTriggerEvent(NewPageEvent)
-                            },
-                            scaffoldState = scaffoldState       ,
-                            snackbarController = snackbarController,
-                            navController = findNavController()
-                        )
+                            RecipeList(
+                                loading = loading,
+                                recipes = recipes,
+                                onChangeRecipeScrollPosition = viewModel::onChangeRecipeScrollPosition,
+                                page = page,
+                                onTriggerEvent = {
+                                    viewModel.onTriggerEvent(NewPageEvent)
+                                },
+                                scaffoldState = scaffoldState       ,
+                                snackbarController = snackbarController,
+                                navController = findNavController()
+                            )
                     }
                 }
             }

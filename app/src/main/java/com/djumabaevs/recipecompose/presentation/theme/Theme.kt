@@ -1,12 +1,11 @@
 package com.djumabaevs.recipecompose.presentation.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import com.djumabaevs.recipecompose.presentation.components.CircularIndeterminateProgressBar
 import com.djumabaevs.recipecompose.presentation.components.DefaultSnackbar
 
+@SuppressLint("ConflictingOnColor")
 private val LightThemeColors = lightColors(
     primary = Blue600,
     primaryVariant = Blue400,
@@ -42,12 +42,14 @@ private val DarkThemeColors = darkColors(
     onSurface = Color.White,
 )
 
+@ExperimentalMaterialApi
 @Composable
 fun AppTheme(
     darkTheme: Boolean,
     displayProgressbar: Boolean,
     scaffoldState: ScaffoldState,
     content: @Composable () -> Unit,
+
 ) {
     MaterialTheme (
         colors = if(darkTheme) DarkThemeColors else LightThemeColors,
@@ -56,10 +58,12 @@ fun AppTheme(
             ) {
         Box(modifier = Modifier
             .fillMaxSize()
-            .background(color = if(!darkTheme) Grey1 else Color.Black))
+            .background(color = if (!darkTheme) Grey1 else Color.Black))
         {
+//            Column {
+//                content()
+//            }
             content()
-
             CircularIndeterminateProgressBar(isDisplayed = displayProgressbar)
 
             DefaultSnackbar(
