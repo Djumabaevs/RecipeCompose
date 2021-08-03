@@ -55,4 +55,19 @@ interface RecipeDao {
         pageSize: Int = RECIPE_PAGINATION_PAGE_SIZE
     ): List<RecipeEntity>
 
+    /**
+     * Restore Recipes after process death
+     */
+    @Query("""
+        SELECT * FROM recipes 
+        WHERE title LIKE '%' || :query || '%'
+        OR ingredients LIKE '%' || :query || '%' 
+        ORDER BY date_updated DESC LIMIT (:page * :pageSize)
+        """)
+    suspend fun restoreRecipes(
+        query: String,
+        page: Int,
+        pageSize: Int = RECIPE_PAGINATION_PAGE_SIZE
+    ): List<RecipeEntity>
+
 }
