@@ -1,10 +1,12 @@
 package com.djumabaevs.recipecompose.cache
 
 import androidx.room.Dao
+import androidx.room.Insert
 
 @Dao
 interface RecipeDao {
 
-    @In
+    @Insert
+    suspend fun insertRecipe(recipe: Re)
 
 }
