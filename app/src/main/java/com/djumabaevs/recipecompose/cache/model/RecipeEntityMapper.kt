@@ -22,6 +22,18 @@ class RecipeEntityMapper: DomainMapper<RecipeEntity, Recipe> {
     }
 
     override fun mapFromDomainModel(domainModel: Recipe): RecipeEntity {
+        return RecipeEntity(
+            id = domainModel.id,
+            title = domainModel.title,
+            featuredImage = domainModel.featuredImage,
+            rating = domainModel.rating,
+            publisher = domainModel.publisher,
+            sourceUrl = domainModel.sourceUrl,
+            ingredients = convertIngredientListToString(domainModel.ingredients),
+            dateAdded = DateUtils.dateToLong(domainModel.dateAdded),
+            dateUpdated = DateUtils.dateToLong(domainModel.dateUpdated),
+            dateCached = DateUtils.dateToLong(DateUtils.createTimestamp())
+        )
 
     }
 
