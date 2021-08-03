@@ -3,6 +3,7 @@ package com.djumabaevs.recipecompose.cache.model
 
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.domain.util.DomainMapper
+import com.djumabaevs.recipecompose.util.DateUtils
 
 class RecipeEntityMapper: DomainMapper<RecipeEntity, Recipe> {
 
@@ -35,6 +36,17 @@ class RecipeEntityMapper: DomainMapper<RecipeEntity, Recipe> {
             dateCached = DateUtils.dateToLong(DateUtils.createTimestamp())
         )
 
+    }
+
+    /**
+     * "Carrot, potato, Chicken, ..."
+     */
+    private fun convertIngredientListToString(ingredients: List<String>): String {
+        val ingredientsString = StringBuilder()
+        for(ingredient in ingredients){
+            ingredientsString.append("$ingredient,")
+        }
+        return ingredientsString.toString()
     }
 
 }
