@@ -43,4 +43,16 @@ interface RecipeDao {
         pageSize: Int = RECIPE_PAGINATION_PAGE_SIZE
     ): List<RecipeEntity>
 
+    /**
+     * Same as 'searchRecipes' function, but no query.
+     */
+    @Query("""
+        SELECT * FROM recipes 
+        ORDER BY date_updated DESC LIMIT :pageSize OFFSET ((:page - 1) * :pageSize)
+    """)
+    suspend fun getAllRecipes(
+        page: Int,
+        pageSize: Int = RECIPE_PAGINATION_PAGE_SIZE
+    ): List<RecipeEntity>
+
 }
