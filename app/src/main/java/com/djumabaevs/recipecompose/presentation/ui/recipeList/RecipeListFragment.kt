@@ -69,14 +69,18 @@ class RecipeListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
 
-                AppTheme(darkTheme = application.isDark.value) {
-                    val recipes = viewModel.recipes.value
-                    val query = viewModel.query.value
-                    val selectedCategory = viewModel.selectedCategory.value
-                    val loading = viewModel.loading.value
-                    val scaffoldState = rememberScaffoldState()
-                    val page = viewModel.page.value
+                val recipes = viewModel.recipes.value
+                val query = viewModel.query.value
+                val selectedCategory = viewModel.selectedCategory.value
+                val loading = viewModel.loading.value
+                val scaffoldState = rememberScaffoldState()
+                val page = viewModel.page.value
 
+                AppTheme(
+                    darkTheme = application.isDark.value,
+                    displayProgressbar = loading,
+                    scaffoldState = scaffoldState
+                ) {
                     Scaffold (
                         topBar = {
                             SearchAppBar(

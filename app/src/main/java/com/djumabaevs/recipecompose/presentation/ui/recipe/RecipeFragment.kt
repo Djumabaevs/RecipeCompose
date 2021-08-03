@@ -26,6 +26,7 @@ import com.djumabaevs.recipecompose.presentation.BaseApplication
 import com.djumabaevs.recipecompose.presentation.components.CircularIndeterminateProgressBar
 import com.djumabaevs.recipecompose.presentation.components.DefaultSnackbar
 import com.djumabaevs.recipecompose.presentation.components.RecipeView
+import com.djumabaevs.recipecompose.presentation.components.ShimmerRecipeAnimation
 import com.djumabaevs.recipecompose.presentation.components.util.SnackbarController
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
 import com.djumabaevs.recipecompose.presentation.ui.recipe.RecipeEvent.*
@@ -39,9 +40,9 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class RecipeFragment: Fragment() {
+class RecipeFragment : Fragment() {
 
-//    private var recipeId: MutableState<Int> = mutableStateOf(-1)
+    //    private var recipeId: MutableState<Int> = mutableStateOf(-1)
     @Inject
     lateinit var application: BaseApplication
 
@@ -75,7 +76,11 @@ class RecipeFragment: Fragment() {
                 val recipe = viewModel.recipe.value
                 val scaffoldState = rememberScaffoldState()
 
-                AppTheme(darkTheme = application.isDark.value) {
+                AppTheme(
+                    darkTheme = application.isDark.value,
+                    displayProgressbar = loading,
+                    scaffoldState = scaffoldState
+                ) {
                     Scaffold(
                         scaffoldState = scaffoldState,
                         snackbarHost = {
@@ -83,11 +88,11 @@ class RecipeFragment: Fragment() {
                         }
                     ) {
                         Box(modifier = Modifier.fillMaxSize()) {
-                            if(loading && recipe == null) {
-                                Text("Loading...")
+                            if (loading && recipe == null) {
+                                ShimmerRecipeAnimation()
                             } else {
-                                recipe?.let{
-                                    if(it.id == 1) {
+                                recipe?.let {
+                                    if (it.id == 1) {
                                         snackbarController.showSnackbar(
                                             scaffoldState = scaffoldState,
                                             message = "An error occurred with this recipe.",
@@ -98,27 +103,11 @@ class RecipeFragment: Fragment() {
                                     }
                                 }
                             }
-                            CircularIndeterminateProgressBar(
-                                isDisplayed = loading)
-                            DefaultSnackbar(
-                                snackbarHostState = scaffoldState.snackbarHostState,
-                                onDismiss = {
-                                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                                },
-                                modifier = Modifier
-                                    .align(Alignment.BottomCenter)
-                            )
 
                         }
 
                     }
                 }
-
-
-
-
-
-
 
 
 /*                Column(modifier = Modifier.padding(16.dp)) {
