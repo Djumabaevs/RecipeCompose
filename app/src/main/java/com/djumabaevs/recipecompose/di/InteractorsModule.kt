@@ -29,4 +29,16 @@ object InteractorsModule {
             dtoMapper = recipeDtoMapper
         )
     }
+
+    @ViewModelScoped
+    @Provides
+    fun provideRestoreRecipes(
+        recipeDao: RecipeDao,
+        recipeEntityMapper: RecipeEntityMapper,
+    ): RestoreRecipes {
+        return RestoreRecipes(
+            recipeDao = recipeDao,
+            entityMapper = recipeEntityMapper,
+        )
+    }
 }
