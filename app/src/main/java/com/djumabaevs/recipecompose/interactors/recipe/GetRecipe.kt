@@ -30,7 +30,23 @@ class GetRecipe (
             //just to show loading, cache is fast
             delay(1000)
 
-            val recipe = getRecipeFromCache
+            val recipe = getRecipeFromCache(recipeId = recipeId)
+
+            if(recipe != null) {
+                emit(DataState.success(recipe))
+                //if recipe is null, it means it was not in the cache for some reason. So get it from network
+            } else {
+                if(isNetworkAvailable){
+                    //get recipe from network.Dto to domain
+                    val networkRecipe = getRecipeFromNetwork(token = token, recipeId = recipeId)
+                    //insert into cache
+                    recipeDao.insertRecipe(
+                        //map domain -> entity
+                    entityMapper.mapFromDomainModel(networkRecipe)
+                    )
+                }
+                //get from cache
+            }
 
         } catch (e: Exception) {
             emit(DataState.error<Recipe>(e.message?: "Unknown error"))
