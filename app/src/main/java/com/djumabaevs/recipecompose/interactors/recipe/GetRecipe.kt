@@ -6,6 +6,7 @@ import com.djumabaevs.recipecompose.domain.data.DataState
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.network.RecipeService
 import com.djumabaevs.recipecompose.network.model.RecipeDtoMapper
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -23,7 +24,23 @@ class GetRecipe (
     token: String,
     isNetworkAvailable: Boolean
     ): Flow<DataState<Recipe>> = flow {
+        try{
+            emit(DataState.loading())
 
+            //just to show loading, cache is fast
+            delay(1000)
+
+            val recipe = getRecipeFromCache
+
+        } catch (e: Exception) {
+            emit(DataState.error<Recipe>(e.message?: "Unknown error"))
+        }
+    }
+
+    private suspend fun getRecipeFromCache(recipeId: Int): Recipe? {
+        return recipeDao.getRecipeById(recipeId)?.let { recipeEntity ->
+            entityMapper.mapToDomainModel(recipeEntity)
+        }
     }
 
 }
