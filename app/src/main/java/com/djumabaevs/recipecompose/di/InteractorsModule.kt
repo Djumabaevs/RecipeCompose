@@ -2,6 +2,9 @@ package com.djumabaevs.recipecompose.di
 
 import com.djumabaevs.recipecompose.cache.RecipeDao
 import com.djumabaevs.recipecompose.cache.model.RecipeEntityMapper
+import com.djumabaevs.recipecompose.interactors.recipe.GetRecipe
+import com.djumabaevs.recipecompose.interactors.recipeList.RestoreRecipes
+import com.djumabaevs.recipecompose.interactors.recipeList.SearchRecipes
 import com.djumabaevs.recipecompose.network.RecipeService
 import com.djumabaevs.recipecompose.network.model.RecipeDtoMapper
 import dagger.Module
