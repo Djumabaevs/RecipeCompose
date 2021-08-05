@@ -1,6 +1,7 @@
 package com.djumabaevs.recipecompose.di
 
 import androidx.room.Room
+import com.djumabaevs.recipecompose.cache.RecipeDao
 import com.djumabaevs.recipecompose.cache.database.AppDatabase
 import com.djumabaevs.recipecompose.presentation.BaseApplication
 import dagger.Module
@@ -23,5 +24,9 @@ object CacheModule {
     }
 
     @Singleton
+    @Provides
+    fun provideRecipeDao(db: AppDatabase): RecipeDao {
+    return db.recipeDao()
+    }
 
 }
