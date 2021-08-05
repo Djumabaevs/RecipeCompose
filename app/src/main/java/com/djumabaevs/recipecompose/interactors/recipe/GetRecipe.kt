@@ -46,6 +46,13 @@ class GetRecipe (
                     )
                 }
                 //get from cache
+                val recipe = getRecipeFromCache(recipeId = recipeId)
+
+                if(recipe != null) {
+                    emit(DataState.success(recipe))
+                } else {
+                    throw Exception("Unable to get recipe from cache.")
+                }
             }
 
         } catch (e: Exception) {
