@@ -43,4 +43,8 @@ class GetRecipe (
         }
     }
 
+    private suspend fun getRecipeFromNetwork(token: String, recipeId: Int): Recipe {
+        return recipeDtoMapper.mapToDomainModel(recipeService.get(token, recipeId))
+    }
+
 }
