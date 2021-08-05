@@ -1,5 +1,9 @@
 package com.djumabaevs.recipecompose.di
 
+import com.djumabaevs.recipecompose.cache.RecipeDao
+import com.djumabaevs.recipecompose.cache.model.RecipeEntityMapper
+import com.djumabaevs.recipecompose.network.RecipeService
+import com.djumabaevs.recipecompose.network.model.RecipeDtoMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,4 +16,17 @@ object InteractorsModule {
 
     @ViewModelScoped
     @Provides
+    fun provideSearchRecipe(
+        recipeService: RecipeService,
+        recipeDao: RecipeDao,
+        recipeEntityMapper: RecipeEntityMapper,
+        recipeDtoMapper: RecipeDtoMapper
+    ): SearchRecipes {
+        return SearchRecipes(
+            recipeService = recipeService,
+            recipeDao = recipeDao,
+            entityMapper = recipeEntityMapper,
+            dtoMapper = recipeDtoMapper
+        )
+    }
 }
