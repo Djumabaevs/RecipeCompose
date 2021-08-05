@@ -3,6 +3,7 @@ package com.djumabaevs.recipecompose.di
 import androidx.room.Room
 import com.djumabaevs.recipecompose.cache.RecipeDao
 import com.djumabaevs.recipecompose.cache.database.AppDatabase
+import com.djumabaevs.recipecompose.cache.model.RecipeEntityMapper
 import com.djumabaevs.recipecompose.presentation.BaseApplication
 import dagger.Module
 import dagger.Provides
@@ -27,6 +28,12 @@ object CacheModule {
     @Provides
     fun provideRecipeDao(db: AppDatabase): RecipeDao {
     return db.recipeDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCacheRecipeMapper():RecipeEntityMapper {
+        return RecipeEntityMapper()
     }
 
 }
