@@ -32,7 +32,7 @@ object CacheModule {
 
     @Singleton
     @Provides
-    fun provideCacheRecipeMapper():RecipeEntityMapper {
+    fun provideCacheRecipeMapper(): RecipeEntityMapper {
         return RecipeEntityMapper()
     }
 
