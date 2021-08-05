@@ -41,4 +41,20 @@ object InteractorsModule {
             entityMapper = recipeEntityMapper,
         )
     }
+
+    @ViewModelScoped
+    @Provides
+    fun provideGetRecipe(
+        recipeDao: RecipeDao,
+        recipeEntityMapper: RecipeEntityMapper,
+        recipeService: RecipeService,
+        recipeDtoMapper: RecipeDtoMapper,
+    ): GetRecipe {
+        return GetRecipe(
+            recipeDao = recipeDao,
+            entityMapper = recipeEntityMapper,
+            recipeService = recipeService,
+            recipeDtoMapper = recipeDtoMapper,
+        )
+    }
 }
