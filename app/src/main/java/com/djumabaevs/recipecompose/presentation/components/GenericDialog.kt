@@ -14,3 +14,13 @@ fun GenericDialog(
 ) {
 
 }
+
+data class PositiveAction(
+    val positiveBtnTxt: String,
+    val onPositiveAction: () -> Unit,
+)
+
+data class NegativeAction(
+    val negativeBtnTxt: String,
+    val onNegativeAction: () -> Unit,
+)
