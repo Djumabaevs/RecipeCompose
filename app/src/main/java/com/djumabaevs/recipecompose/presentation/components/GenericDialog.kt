@@ -89,3 +89,56 @@ private constructor(builder: GenericDialogInfo.Builder){
         this.positiveAction = builder.positiveAction
         this.negativeAction = builder.negativeAction
     }
+
+
+    class Builder {
+
+        var title: String? = null
+            private set
+
+        var onDismiss: (() -> Unit)? = null
+            private set
+
+        var description: String? = null
+            private set
+
+        var positiveAction: PositiveAction? = null
+            private set
+
+        var negativeAction: NegativeAction? = null
+            private set
+
+        fun title(title: String): Builder{
+            this.title = title
+            return this
+        }
+
+        fun onDismiss(onDismiss: () -> Unit): Builder{
+            this.onDismiss = onDismiss
+            return this
+        }
+
+        fun description(
+            description: String
+        ): Builder{
+            this.description = description
+            return this
+        }
+
+        fun positive(
+            positiveAction: PositiveAction?,
+        ) : Builder {
+            this.positiveAction = positiveAction
+            return this
+        }
+
+        fun negative(
+            negativeAction: NegativeAction
+        ) : Builder {
+            this.negativeAction = negativeAction
+            return this
+        }
+
+        fun build() = GenericDialogInfo(this)
+    }
+}
