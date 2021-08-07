@@ -66,3 +66,26 @@ data class NegativeAction(
     val negativeBtnTxt: String,
     val onNegativeAction: () -> Unit,
 )
+
+class GenericDialogInfo
+private constructor(builder: GenericDialogInfo.Builder){
+
+    val title: String
+    val onDismiss: () -> Unit
+    val description: String?
+    val positiveAction: PositiveAction?
+    val negativeAction: NegativeAction?
+
+    init {
+        if(builder.title == null){
+            throw Exception("GenericDialog title cannot be null.")
+        }
+        if(builder.onDismiss == null){
+            throw Exception("GenericDialog onDismiss function cannot be null.")
+        }
+        this.title = builder.title!!
+        this.onDismiss = builder.onDismiss!!
+        this.description = builder.description
+        this.positiveAction = builder.positiveAction
+        this.negativeAction = builder.negativeAction
+    }
