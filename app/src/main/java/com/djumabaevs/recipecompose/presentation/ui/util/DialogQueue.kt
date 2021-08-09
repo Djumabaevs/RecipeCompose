@@ -9,4 +9,14 @@ class DialogQueue {
 
     //Queue for first-in first-out behaviour
     val queue: MutableState<Queue<GenericDialogInfo>> = mutableStateOf(LinkedList())
+
+    fun removeHeadMessage() {
+        if(queue.value.isNotEmpty()) {
+            val update = queue.value
+            update.remove() // remove first(oldest message
+            queue.value = ArrayDeque() // force recompose(bug?)
+            queue.value = update
+        }
+    }
+
 }

@@ -67,7 +67,7 @@ data class NegativeAction(
     val onNegativeAction: () -> Unit,
 )
 
-class GenericDialogInfo
+class   GenericDialogInfo
 private constructor(builder: GenericDialogInfo.Builder){
 
     val title: String
