@@ -13,6 +13,7 @@ import com.djumabaevs.recipecompose.interactors.app.DoesNetworkHaveInternet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.HashSet
 
 val TAG = "C- Manager"
@@ -58,6 +59,14 @@ class ConnectionLiveData(context: Context): LiveData<Boolean>() {
                 //check if this network actually has internet
                 CoroutineScope(Dispatchers.IO).launch {
                     val hasInternet = DoesNetworkHaveInternet.execute(network.socketFactory)
+                    if(hasInternet) {
+                        withContext(Dispatchers.Main) {
+                            Log.d(TAG, "onAvailable: adding network: ${network}")
+                            validNetworks.add(network)
+                            checkValidNetworks()
+
+                        }
+                    }
                 }
             }
         }
@@ -66,7 +75,9 @@ class ConnectionLiveData(context: Context): LiveData<Boolean>() {
          Source: https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback#onLost(android.net.Network)
         */
         override fun onLost(network: Network) {
-            super.onLost(network)
+            Log.d(TAG, "onLost: ${network}")
+            validNetworks.remove(network)
+            checkValidNetworks()
         }
     }
 
