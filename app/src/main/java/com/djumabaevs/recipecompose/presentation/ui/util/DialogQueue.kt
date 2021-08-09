@@ -19,4 +19,8 @@ class DialogQueue {
         }
     }
 
+    fun appendErrorMessage(title: String, description: String) {
+        queue.value.offer()
+    }
+
 }
