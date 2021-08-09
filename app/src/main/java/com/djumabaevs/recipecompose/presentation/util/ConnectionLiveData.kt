@@ -9,6 +9,10 @@ import android.net.NetworkRequest
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.LiveData
+import com.djumabaevs.recipecompose.interactors.app.DoesNetworkHaveInternet
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.HashSet
 
 val TAG = "C- Manager"
@@ -47,6 +51,15 @@ class ConnectionLiveData(context: Context): LiveData<Boolean>() {
     private fun createNetworkCallback() = object: ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             Log.d(TAG, "onAvailable: ${network}")
+            val networkCapabilities = cm.getNetworkCapabilities(network)
+            val hasInternetCapability = networkCapabilities?.hasCapability(NET_CAPABILITY_INTERNET)
+            Log.d(TAG, "onAvailable: ${network}, $hasInternetCapability")
+            if(hasInternetCapability == true) {
+                //check if this network actually has internet
+                CoroutineScope(Dispatchers.IO).launch {
+                    val hasInternet = DoesNetworkHaveInternet.execute(network.socketFactory)
+                }
+            }
         }
         /*
          If the callback was registered with registerNetworkCallback() it will be called for each network which no longer satisfies the criteria of the callback.
