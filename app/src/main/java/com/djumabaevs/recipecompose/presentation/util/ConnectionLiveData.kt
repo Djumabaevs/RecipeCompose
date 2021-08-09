@@ -38,7 +38,7 @@ class ConnectionLiveData(context: Context): LiveData<Boolean>() {
     }
 
     override fun onActive() {
-        networkCallback = createN
+        networkCallback = createNetworkCallback()
         val networkRequest = NetworkRequest.Builder()
             .addCapability(NET_CAPABILITY_INTERNET)
             .build()
