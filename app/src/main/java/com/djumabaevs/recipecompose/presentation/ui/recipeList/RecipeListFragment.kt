@@ -1,6 +1,6 @@
 package com.djumabaevs.recipecompose.presentation.ui.recipeList
 
-import SearchAppBar
+/*import SearchAppBar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -195,7 +195,7 @@ fun MyDrawer(
         Text(text = "item5")
 
     }
-}
+}*/
 
 
 

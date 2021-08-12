@@ -9,7 +9,6 @@ import androidx.lifecycle.*
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.interactors.recipeList.RestoreRecipes
 import com.djumabaevs.recipecompose.interactors.recipeList.SearchRecipes
-import com.djumabaevs.recipecompose.repository.RecipeRepository
 import com.djumabaevs.recipecompose.util.TAG
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -144,7 +143,8 @@ constructor(
         // New search. Reset the state
         resetSearchState()
 
-        searchRecipes.execute(token = token, page = page.value, query = query.value, connectivityManager.isNetworkAvailable.value).onEach { dataState ->
+        searchRecipes.execute(token = token, page = page.value, query = query.value, isNetworkAvailable = connectivityManager.isNetworkAvailable.value )
+            .onEach { dataState ->
             loading.value = dataState.loading
 
             dataState.data?.let { list ->
@@ -184,7 +184,9 @@ constructor(
             Log.d(TAG, "nextPage: triggered: ${page.value}")
 
             if (page.value > 1) {
-                searchRecipes.execute(token = token, page = page.value, query = query.value, connectivityManager.isNetworkAvailable.value).onEach { dataState ->
+                searchRecipes
+                    .execute(token = token, page = page.value, query = query.value, isNetworkAvailable = connectivityManager.isNetworkAvailable.value)
+                    .onEach { dataState ->
                     loading.value = dataState.loading
 
                     dataState.data?.let { list ->
@@ -218,6 +220,10 @@ constructor(
         setListScrollPosition(position = position)
     }
 
+    /**
+     * Called when a new search is executed.
+     */
+
     private fun clearSelectedCategory() {
         setSelectedCategory(null)
         selectedCategory.value = null
@@ -241,9 +247,9 @@ constructor(
         onQueryChanged(category)
     }
 
-    fun onChangeCategoryScrollPosition(position: Int) {
+  /*  fun onChangeCategoryScrollPosition(position: Int) {
         categoryScrollPosition = position
-    }
+    }*/
 
     private fun setListScrollPosition(position: Int) {
         recipeListScrollPosition = position
