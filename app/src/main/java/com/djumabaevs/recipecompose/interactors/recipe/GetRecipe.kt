@@ -46,10 +46,10 @@ class GetRecipe (
                     )
                 }
                 //get from cache
-                val recipe = getRecipeFromCache(recipeId = recipeId)
+                val recipeCache = getRecipeFromCache(recipeId = recipeId)
 
-                if(recipe != null) {
-                    emit(DataState.success(recipe))
+                if(recipeCache != null) {
+                    emit(DataState.success(recipeCache))
                 } else {
                     throw Exception("Unable to get recipe from cache.")
                 }
