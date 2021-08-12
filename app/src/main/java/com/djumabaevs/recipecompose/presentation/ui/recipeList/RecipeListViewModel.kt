@@ -7,12 +7,18 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.djumabaevs.recipecompose.domain.model.Recipe
+import com.djumabaevs.recipecompose.interactors.recipeList.RestoreRecipes
+import com.djumabaevs.recipecompose.interactors.recipeList.SearchRecipes
 import com.djumabaevs.recipecompose.repository.RecipeRepository
 import com.djumabaevs.recipecompose.util.TAG
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListEvent.*
+import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
+import com.djumabaevs.recipecompose.presentation.util.DialogQueue
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 const val PAGE_SIZE = 30
 
@@ -21,19 +27,27 @@ const val STATE_KEY_QUERY = "recipe.state.query.key"
 const val STATE_KEY_LIST_POSITION = "recipe.state.query.list_position"
 const val STATE_KEY_SELECTED_CATEGORY = "recipe.state.query.selected_category"
 
-class RecipeListViewModel @ViewModelInject constructor(
-    private val repository: RecipeRepository,
+@HiltViewModel
+class RecipeListViewModel
+@Inject
+constructor(
+ /*   private val repository: RecipeRepository,
     @Named("auth_token") private val token: String,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    @Assisted private val savedStateHandle: SavedStateHandle*/
+    private val searchRecipes: SearchRecipes,
+    private val restoreRecipes: RestoreRecipes,
+    private val connectivityManager: ConnectivityManager,
+    @Named("auth_token") private val token: String,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    val recipes: MutableState<List<Recipe>> = mutableStateOf(listOf())
+    val recipes: MutableState<List<Recipe>> = mutableStateOf(ArrayList())
     val query = mutableStateOf("")
     val selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
-    var categoryScrollPosition: Int = 0
+    var recipeListScrollPosition = 0
     val loading = mutableStateOf(false)
     val page = mutableStateOf(1)
-    private var recipeListScrollPosition = 0
+    val dialogQueue = DialogQueue()
 
 
 //    private val _recipes: MutableLiveData<List<Recipe>> = MutableLiveData()
@@ -54,7 +68,13 @@ class RecipeListViewModel @ViewModelInject constructor(
             setSelectedCategory(c)
         }
 
-        onTriggerEvent(NewSearchEvent)
+
+        if(recipeListScrollPosition != 0){
+            onTriggerEvent(RecipeListEvent.RestoreStateEvent)
+        }
+        else{
+            onTriggerEvent(RecipeListEvent.NewSearchEvent)
+        }
     }
 
     fun onTriggerEvent(event: RecipeListEvent) {
