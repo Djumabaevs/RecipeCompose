@@ -12,6 +12,7 @@ import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
 import com.djumabaevs.recipecompose.presentation.util.DialogQueue
 import com.djumabaevs.recipecompose.presentation.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -52,6 +53,18 @@ class RecipeDetailViewModel
             } catch (e: Exception) {
                 Log.e(TAG, "onTriggerEvent: ${e}, ${e.cause}")
                 e.printStackTrace()
+            }
+        }
+    }
+
+    private fun getRecipe(id: Int) {
+        getRecipe.execute(id, token, connectivityManager.isNetworkAvailable.value).onEach { dataState ->
+
+            loading.value = dataState.loading
+
+            dataState.data?.let { data ->
+                recipe.value = data
+                state.set(STATE_KEY_RECIPE, data.id)
             }
         }
     }
