@@ -27,4 +27,11 @@ class RecipeDetailViewModel
     val loading = mutableStateOf(false)
     val onLoad: MutableState<Boolean> = mutableStateOf(false)
     val dialogQueue = DialogQueue()
+
+    init {
+        //restore if process dies
+        state.get<Int>(STATE_KEY_RECIPE)?.let {recipeId ->
+            onTriggerEvent(RecipeEvent.GetRecipeEvent(recipeId))
+        }
+    }
 }
