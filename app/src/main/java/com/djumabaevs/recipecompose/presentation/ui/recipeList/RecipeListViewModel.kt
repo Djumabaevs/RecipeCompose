@@ -18,6 +18,8 @@ import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListEvent.*
 import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
 import com.djumabaevs.recipecompose.presentation.util.DialogQueue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 const val PAGE_SIZE = 30
@@ -97,8 +99,8 @@ constructor(
         }
     }
 
-    private suspend fun restoreState() {
-        loading.value = true
+    private fun restoreState() {
+ /*       loading.value = true
         val results: MutableList<Recipe> = mutableListOf()
         for(p in 1..page.value) {
             val result = repository.search(
@@ -111,12 +113,24 @@ constructor(
                 recipes.value = results
                 loading.value = false
             }
-        }
+        }*/
+
+        restoreRecipes.execute(page = page.value, query = query.value).onEach { dataState ->
+            loading.value = dataState.loading
+
+            dataState.data?.let { list ->
+                recipes.value = list
+            }
+
+            dataState.error?.let { error ->
+                dialogQueue.appendErrorMessage("An Error Occurred", error)
+            }
+        }.launchIn(viewModelScope)
     }
 
     //usecase 1
      private suspend fun newSearch() {
-            loading.value = true
+       /*     loading.value = true
             delay(2000)
             val result = repository.search(
                 token = token,
@@ -124,11 +138,28 @@ constructor(
                 query = query.value
             )
             recipes.value = result
-            loading.value = false
+            loading.value = false*/
+
+        Log.d(TAG, "newSearch: query: ${query.value}, page: ${page.value}")
+        // New search. Reset the state
+        resetSearchState()
+
+        searchRecipes.execute(token = token, page = page.value, query = query.value, connectivityManager.isNetworkAvailable.value).onEach { dataState ->
+            loading.value = dataState.loading
+
+            dataState.data?.let { list ->
+                recipes.value = list
+            }
+
+            dataState.error?.let { error ->
+                Log.e(TAG, "newSearch: ${error}")
+                dialogQueue.appendErrorMessage("An Error Occurred", error)
+            }
+        }.launchIn(viewModelScope)
     }
     //usecase 2
     private suspend fun nextPage() {
-            //prevent duplicate events due to recompose happening to quickly
+/*            //prevent duplicate events due to recompose happening to quickly
             if((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
                 loading.value = true
                 incrementPage()
@@ -146,8 +177,32 @@ constructor(
                     appendRecipes(result)
                 }
                 loading.value = false
+            }*/
+
+        if ((recipeListScrollPosition + 1) >= (page.value * PAGE_SIZE)) {
+            incrementPage()
+            Log.d(TAG, "nextPage: triggered: ${page.value}")
+
+            if (page.value > 1) {
+                searchRecipes.execute(token = token, page = page.value, query = query.value, connectivityManager.isNetworkAvailable.value).onEach { dataState ->
+                    loading.value = dataState.loading
+
+                    dataState.data?.let { list ->
+                        appendRecipes(list)
+                    }
+
+                    dataState.error?.let { error ->
+                        Log.e(TAG, "nextPage: ${error}")
+                        dialogQueue.appendErrorMessage("An Error Occurred", error)
+                    }
+                }.launchIn(viewModelScope)
             }
+        }
     }
+
+    /**
+     * Append new recipes to the current list of recipes
+     */
 
     private fun appendRecipes(recipes: List<Recipe>) {
         val current = ArrayList(this.recipes.value)
