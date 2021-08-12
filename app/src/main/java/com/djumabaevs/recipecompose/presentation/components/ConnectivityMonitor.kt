@@ -14,13 +14,13 @@ import androidx.compose.ui.unit.dp
 fun ConnectivityMonitor(
     isNetworkAvailable: Boolean
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = "No network available!",
-            modifier = Modifier
-                .padding(8.dp)
-                .align(Alignment.CenterHorizontally),
-            style = MaterialTheme.typography.h6
-        )
+    if(!isNetworkAvailable){
+        Column(modifier = Modifier.fillMaxWidth()){
+            Text(
+                "No network connection",
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(8.dp),
+                style = MaterialTheme.typography.h6
+            )
+        }
     }
 }

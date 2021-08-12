@@ -85,7 +85,7 @@ constructor(
                     is NewSearchEvent -> {
                         newSearch()
                     }
-                    is NewPageEvent -> {
+                    is NextPageEvent -> {
                         nextPage()
                     }
                     is RestoreStateEvent -> {

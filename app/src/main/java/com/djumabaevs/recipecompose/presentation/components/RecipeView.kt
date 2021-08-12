@@ -13,8 +13,86 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.util.DEFAULT_RECIPE_IMAGE
-import com.djumabaevs.recipecompose.util.LoadPicture
+import com.google.accompanist.coil.CoilImage
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+
+@ExperimentalCoroutinesApi
+@Composable
+fun RecipeView(
+    recipe: Recipe,
+){
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        item {
+            CoilImage(
+                data = recipe.featuredImage,
+                contentDescription = recipe.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(225.dp),
+                contentScale = ContentScale.Crop,
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 4.dp)
+                ){
+                    Text(
+                        text = recipe.title,
+                        modifier = Modifier
+                            .fillMaxWidth(0.85f)
+                            .wrapContentWidth(Alignment.Start)
+                        ,
+                        style = MaterialTheme.typography.h3
+                    )
+                    val rank = recipe.rating.toString()
+                    Text(
+                        text = rank,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.End)
+                            .align(Alignment.CenterVertically)
+                        ,
+                        style = MaterialTheme.typography.h5
+                    )
+                }
+                val updated = recipe.dateUpdated
+                Text(
+                    text = "Updated ${updated} by ${recipe.publisher}"
+                    ,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                    ,
+                    style = MaterialTheme.typography.caption
+                )
+                for(ingredient in recipe.ingredients){
+                    Text(
+                        text = ingredient,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 4.dp)
+                        ,
+                        style = MaterialTheme.typography.body1
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+
+
+/*
 @Composable
 fun RecipeView(
     recipe: Recipe
@@ -89,4 +167,4 @@ fun RecipeView(
             }
         }
     }
-}
+}*/

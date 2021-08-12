@@ -19,9 +19,66 @@ import androidx.compose.ui.unit.dp
 import com.djumabaevs.recipecompose.R
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.util.DEFAULT_RECIPE_IMAGE
-import com.djumabaevs.recipecompose.util.LoadPicture
+import com.google.accompanist.coil.CoilImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+
+@ExperimentalCoroutinesApi
+@Composable
+fun RecipeCard(
+    recipe: Recipe,
+    onClick: () -> Unit,
+) {
+    Card(
+        shape = MaterialTheme.shapes.small,
+        modifier = Modifier
+            .padding(
+                bottom = 6.dp,
+                top = 6.dp,
+            )
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        elevation = 8.dp,
+    ) {
+        Column {
+            CoilImage(
+                data = recipe.featuredImage,
+                contentDescription = recipe.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(225.dp),
+                contentScale = ContentScale.Crop,
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp, bottom = 12.dp, start = 8.dp, end = 8.dp)
+            ) {
+                Text(
+                    text = recipe.title,
+                    modifier = Modifier
+                        .fillMaxWidth(0.85f)
+                        .wrapContentWidth(Alignment.Start),
+                    style = MaterialTheme.typography.h3
+                )
+                val rank = recipe.rating.toString()
+                Text(
+                    text = rank,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.End)
+                        .align(Alignment.CenterVertically),
+                    style = MaterialTheme.typography.h5
+                )
+            }
+        }
+    }
+}
+
+
+
+
+/*
 @ExperimentalCoroutinesApi
 @Composable
 fun RecipeCard(
@@ -42,23 +99,23 @@ fun RecipeCard(
     ) {
 
         Column {
-            recipe.featuredImage?.let { url ->
+            recipe.featuredImage.let { url ->
 
-//                val imageBitmap: ImageBitmap = ImageBitmap.imageResource(id = R.drawable.empty_plate)
+        //                val imageBitmap: ImageBitmap = ImageBitmap.imageResource(id = R.drawable.empty_plate)
 
                 val image = LoadPicture(
                     url = url,
                     defaultImage = DEFAULT_RECIPE_IMAGE).value
-             image?.let { img ->
-                 Image(
-                     bitmap = img.asImageBitmap(),
-                     contentDescription = "Recipe Featured Image",
-                     modifier = Modifier
-                         .fillMaxWidth()
-                         .height(225.dp),
-                     contentScale = ContentScale.Crop
-                 )
-             }
+                image?.let { img ->
+                    Image(
+                        bitmap = img.asImageBitmap(),
+                        contentDescription = "Recipe Featured Image",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(225.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
 
             }
             recipe.title?.let { title ->
@@ -93,4 +150,4 @@ fun RecipeCard(
 
     }
 
-}
+}*/

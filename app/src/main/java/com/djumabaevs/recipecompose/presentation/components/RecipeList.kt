@@ -116,7 +116,7 @@ fun RecipeList(
         .background(color = MaterialTheme.colors.surface)
     ) {
         if (loading && recipes.isEmpty()) {
-            LoadingRecipeListShimmer(imageHeight = 250.dp,)
+            LoadingRecipeShimmerAdvanced(imageHeight = 250.dp,)
         }
         else if(recipes.isEmpty()){
             NothingHere()

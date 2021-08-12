@@ -7,12 +7,12 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.HiltViewModelFactory
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
-import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.compose.NamedNavArgument
-import androidx.navigation.compose.navArgument
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
 import com.djumabaevs.recipecompose.R
 import com.djumabaevs.recipecompose.datastore.SettingsDataStore
 import com.djumabaevs.recipecompose.presentation.navigation.Screen
@@ -22,7 +22,6 @@ import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListScreen
 import com.djumabaevs.recipecompose.presentation.ui.recipeList.RecipeListViewModel
 import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.internal.lifecycle.HiltViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
@@ -46,15 +45,18 @@ class MainActivity : AppCompatActivity() {
         connectivityManager.unregisterConnectionObserver(this)
     }
 
+
+
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = Screen.RecipeList.route) {
-                composable(route = Screen.RecipeList.route) { navBackStackEntry ->
+                composable(route = Screen.RecipeList.route)
+                { navBackStackEntry ->
                     val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
-                    val viewModel: RecipeListViewModel = viewModel("RecipeListViewModel", factory)
+                    val viewModel: RecipeListViewModel = viewModel(key = "RecipeListViewModel", factory = factory)
                     RecipeListScreen(
                         isDarkTheme = settingsDataStore.isDark.value,
                         isNetworkAvailable = connectivityManager.isNetworkAvailable.value,
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     })
                 ) { navBackStackEntry ->
                     val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
-                    val viewModel: RecipeDetailViewModel = viewModel("RecipeDetailViewModel", factory)
+                    val viewModel: RecipeDetailViewModel = viewModel(key = "RecipeDetailViewModel", factory = factory)
                     RecipeDetailScreen(
                         isDarkTheme = settingsDataStore.isDark.value,
                         isNetworkAvailable = connectivityManager.isNetworkAvailable.value,
@@ -114,6 +116,7 @@ class MainActivity : AppCompatActivity() {
             .commit()*/
 
 
+/*
 class Extension {
 
 
@@ -135,4 +138,4 @@ class Extension {
                    }
                )
            }
-       }
+       }*/

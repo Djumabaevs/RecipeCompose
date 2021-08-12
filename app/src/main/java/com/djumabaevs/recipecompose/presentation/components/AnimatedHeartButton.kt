@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-object HeartAnimationDefinition {
+/*object HeartAnimationDefinition {
 
     enum class HeartButtonState {
         IDLE, ACTIVE
@@ -78,5 +78,5 @@ fun AnimatedHeartButton(
                 .clickable(onClick = onToggle),
             contentDescription = "")
     }
-}
+}*/
 

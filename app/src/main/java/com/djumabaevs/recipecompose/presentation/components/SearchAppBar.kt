@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -34,6 +35,7 @@ fun SearchAppBar(
     onSelectedCategoryChanged: (String) -> Unit,
     onToggleTheme: () -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     Surface(
         modifier = Modifier
@@ -42,7 +44,10 @@ fun SearchAppBar(
         elevation = 8.dp,
     ) {
         Column {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 TextField(
                     modifier = Modifier
                         .fillMaxWidth(.9f)
@@ -58,7 +63,8 @@ fun SearchAppBar(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             onExecuteSearch()
-                            keyboardController?.hideSoftwareKeyboard()
+//              focusManager.clearFocus(forcedClear = true) // close keyboard
+                            keyboardController?.hideSoftwareKeyboard() // another way to close keyboard
                         },
                     ),
                     leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search Icon") },
@@ -87,7 +93,7 @@ fun SearchAppBar(
                     .padding(start = 8.dp, bottom = 8.dp),
                 state = scrollState,
             ) {
-                items(categories){
+                items(categories) {
                     FoodCategoryChip(
                         category = it.value,
                         isSelected = selectedCategory == it,
