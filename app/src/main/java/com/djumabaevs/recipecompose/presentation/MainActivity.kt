@@ -2,11 +2,34 @@ package com.djumabaevs.recipecompose.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.compose.material.ExperimentalMaterialApi
 import com.djumabaevs.recipecompose.R
+import com.djumabaevs.recipecompose.datastore.SettingsDataStore
+import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var connectivityManager: ConnectivityManager
+    @Inject
+    lateinit var settingsDatastore:SettingsDataStore
+
+    override fun onStart() {
+        super.onStart()
+        connectivityManager.registerConnectionObserver(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        connectivityManager.unregisterConnectionObserver(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

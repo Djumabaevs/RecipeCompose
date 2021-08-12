@@ -6,10 +6,13 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import com.djumabaevs.recipecompose.presentation.components.RecipeList
 import com.djumabaevs.recipecompose.presentation.theme.AppTheme
 import com.djumabaevs.recipecompose.presentation.util.TAG
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalComposeUiApi
 @ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @Composable
