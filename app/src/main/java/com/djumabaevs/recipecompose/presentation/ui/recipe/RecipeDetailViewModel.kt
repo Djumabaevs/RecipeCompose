@@ -1,9 +1,13 @@
 package com.djumabaevs.recipecompose.presentation.ui.recipe
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.interactors.recipe.GetRecipe
 import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
+import com.djumabaevs.recipecompose.presentation.util.DialogQueue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Named
@@ -19,5 +23,8 @@ class RecipeDetailViewModel
     private val state: SavedStateHandle
 ) : ViewModel() {
 
-
+    val recipe: MutableState<Recipe?> = mutableStateOf(null)
+    val loading = mutableStateOf(false)
+    val onLoad: MutableState<Boolean> = mutableStateOf(false)
+    val dialogQueue = DialogQueue()
 }
