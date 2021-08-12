@@ -1,14 +1,18 @@
 package com.djumabaevs.recipecompose.presentation.ui.recipe
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.interactors.recipe.GetRecipe
 import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
 import com.djumabaevs.recipecompose.presentation.util.DialogQueue
+import com.djumabaevs.recipecompose.presentation.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -32,6 +36,23 @@ class RecipeDetailViewModel
         //restore if process dies
         state.get<Int>(STATE_KEY_RECIPE)?.let {recipeId ->
             onTriggerEvent(RecipeEvent.GetRecipeEvent(recipeId))
+        }
+    }
+
+    fun onTriggerEvent(event: RecipeEvent) {
+        viewModelScope.launch {
+            try {
+                when(event) {
+                    is RecipeEvent.GetRecipeEvent -> {
+                        if(recipe.value == null) {
+                            getRecipe(event.id)
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "onTriggerEvent: ${e}, ${e.cause}")
+                e.printStackTrace()
+            }
         }
     }
 }
