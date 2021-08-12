@@ -36,7 +36,7 @@ class SettingsDataStore
         observeDataStore()
     }
 
-    private val isDark = mutableStateOf(false)
+    val isDark = mutableStateOf(false)
 
     fun toggleTheme() {
         scope.launch {
