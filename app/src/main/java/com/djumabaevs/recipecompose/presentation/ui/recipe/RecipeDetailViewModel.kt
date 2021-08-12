@@ -66,6 +66,11 @@ class RecipeDetailViewModel
                 recipe.value = data
                 state.set(STATE_KEY_RECIPE, data.id)
             }
+
+            dataState.error?.let { error ->
+                Log.e(TAG, "getRecipe: $error")
+                dialogQueue.appendErrorMessage("An error occurred", error)
+            }
         }
     }
 }
