@@ -1,5 +1,6 @@
-package com.djumabaevs.recipecompose.presentation.ui.recipe
 
+package com.djumabaevs.recipecompose.presentation.ui.recipe
+/*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,12 +59,14 @@ class RecipeFragment : Fragment() {
             viewModel.onTriggerEvent(GetRecipeEvent(recipeId))
         }
 
+*/
 /*        CoroutineScope(Main).launch {
             delay(1000)
             arguments?.getInt("recipeId")?.let { rId ->
                 recipeId.value = rId
             }
-        }*/
+        }*//*
+
     }
 
     @ExperimentalMaterialApi
@@ -112,14 +115,19 @@ class RecipeFragment : Fragment() {
                 }
 
 
+*/
 /*                Column(modifier = Modifier.padding(16.dp)) {
                     Text(
 //                        text = recipeId.let{"Selected recipe: ${recipeId}"} ?: "Loading...",
-                        *//*text = if(recipeId.value != -1) {
+                        *//*
+*/
+/*text = if(recipeId.value != -1) {
                             "Selected recipe: ${recipeId.value}"
                         } else {
                             "Loading ..."
                         }*//*
+*/
+/*
                         text =  recipe?.let {
                            "Selected recipe title: ${recipe.title}"
                         }?: "Loading..."
@@ -128,8 +136,9 @@ class RecipeFragment : Fragment() {
                             fontSize = 21.sp
                         )
                     )
-                }*/
+                }*//*
+
             }
         }
     }
-}
+}*/

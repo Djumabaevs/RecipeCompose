@@ -1,5 +1,6 @@
-package com.djumabaevs.recipecompose.presentation.ui.recipe
 
+package com.djumabaevs.recipecompose.presentation.ui.recipe
+/*
 import android.text.GetChars
 import android.util.Log
 import androidx.compose.runtime.MutableState
@@ -63,3 +64,4 @@ class RecipeViewModel
     }
 
 }
+*/
