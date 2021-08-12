@@ -1,6 +1,7 @@
 package com.djumabaevs.recipecompose.presentation.ui.recipe
 
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -37,7 +38,14 @@ fun RecipeDetailScreen(
             scaffoldState = scaffoldState,
             dialogQueue = dialogQueue.queue.value
         ) {
+            Scaffold(
+                scaffoldState = scaffoldState,
+                snackbarHost = {
+                    scaffoldState.snackbarHostState
+                }
+            ) {
 
+            }
         }
     }
 }
