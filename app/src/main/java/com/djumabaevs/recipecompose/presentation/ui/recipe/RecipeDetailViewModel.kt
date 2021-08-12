@@ -12,6 +12,7 @@ import com.djumabaevs.recipecompose.presentation.util.ConnectivityManager
 import com.djumabaevs.recipecompose.presentation.util.DialogQueue
 import com.djumabaevs.recipecompose.presentation.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -71,6 +72,6 @@ class RecipeDetailViewModel
                 Log.e(TAG, "getRecipe: $error")
                 dialogQueue.appendErrorMessage("An error occurred", error)
             }
-        }
+        }.launchIn(viewModelScope)
     }
 }
