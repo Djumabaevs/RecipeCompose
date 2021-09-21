@@ -43,6 +43,7 @@ fun RecipeCard(
         elevation = 8.dp,
     ) {
         Column {
+
             Image(
                 painter = rememberImagePainter(
                     data = recipe.featuredImage,
