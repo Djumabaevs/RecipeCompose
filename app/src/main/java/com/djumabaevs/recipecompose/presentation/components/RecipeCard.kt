@@ -16,10 +16,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.djumabaevs.recipecompose.R
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.util.DEFAULT_RECIPE_IMAGE
-import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -34,6 +35,7 @@ fun RecipeCard(
         modifier = Modifier
             .padding(
                 bottom = 6.dp,
+
                 top = 6.dp,
             )
             .fillMaxWidth()
@@ -41,13 +43,15 @@ fun RecipeCard(
         elevation = 8.dp,
     ) {
         Column {
-            CoilImage(
-                data = recipe.featuredImage,
+            Image(
+                painter = rememberImagePainter(
+                    data = recipe.featuredImage,
+                    ),
                 contentDescription = recipe.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(225.dp),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Crop
             )
             Row(
                 modifier = Modifier

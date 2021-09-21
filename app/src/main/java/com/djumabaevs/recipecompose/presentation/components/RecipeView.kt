@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.djumabaevs.recipecompose.domain.model.Recipe
 import com.djumabaevs.recipecompose.util.DEFAULT_RECIPE_IMAGE
-import com.google.accompanist.coil.CoilImage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -27,13 +27,15 @@ fun RecipeView(
             .fillMaxWidth()
     ) {
         item {
-            CoilImage(
-                data = recipe.featuredImage,
+            Image(
+                painter = rememberImagePainter(
+                    data = recipe.featuredImage,
+                ),
                 contentDescription = recipe.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(225.dp),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Crop
             )
             Column(
                 modifier = Modifier

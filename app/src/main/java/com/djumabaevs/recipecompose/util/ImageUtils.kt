@@ -16,7 +16,7 @@ import com.djumabaevs.recipecompose.R
 const val DEFAULT_RECIPE_IMAGE = R.drawable.empty_plate
 
 
-@Composable
+/* @Composable
 fun LoadPicture(
     url: String,
     @DrawableRes defaultImage: Int
@@ -51,4 +51,4 @@ fun LoadPicture(
         })
 
     return bitmapState
-}
+} */
