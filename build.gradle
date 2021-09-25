@@ -22,5 +22,14 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+task testAndOpen(type: Exec) {
+    //execute test task first
+    dependsOn 'test'
+    //set the base dir
+    workingDir './build/reports/tests/testDebugUnitTest/index.html'
+    //launch cmd and open the file with the default associated program
+    commandLine 'cmd', '/c', 'start index.html'
+}
+
 
 
